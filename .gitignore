@@ -8,5 +8,5 @@
 *.out
 *.gz
 *latexmk
-Supporting.*
+Supporting*
 Paper_new.*
