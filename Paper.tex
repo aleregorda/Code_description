@@ -172,11 +172,15 @@ Finally, effective viscosity $\eta_{eff}$ is capped by the minimum and the maxim
 \begin{equation}\label{eq:effective}
 \eta_{eff}=\min(\max(\eta_{vp},\eta_{min}),\eta_{max})
 \end{equation}
-Viscous creep and plastic yielding are non-linear rheologies because of their dependence on the velocity field through pressure and strain rates. Therefore, the solution is determined by means of Picard-type iterations, until convergence of the velocity field \citep{Thieulot2011}. The correlation between two consecutive non-linear iterations is given by
+Viscous creep and plastic yielding are non-linear rheologies because of their dependence on the velocity field through pressure and strain rates. Therefore, the solution is determined by means of Picard-type iterations, until convergence of the velocity field \citep{Glerum2018}. The convergence is verified at each iteration $i$ via the nonlinear residual $\bm{\mathcal{R}}^i$ that can be determined as
 \begin{equation}\label{eq:convergence}
-\chi=1-\frac{\langle (\bm{v}^i-\langle\bm{v}^i\rangle)\cdot (\bm{v}^{i+1}-\langle\bm{v}^{i+1}\rangle) \rangle}{\sqrt{\sigma^i\sigma^{i+1}}}
+\bm{\mathcal{R}}^i= \mathbb{K} (\eta_{eff}(\dot{\bm{\epsilon}}^{i-1},p^{i-1}))\cdot \bm{v}^{i-1} - \bm{f}^i
 \end{equation}
-Iterations are performed until either convergence ($\chi<tol$) or maximal number of non-linear iterations ($it_{max}$) is reached.
+%\begin{equation}\label{eq:convergence}
+%\chi=1-\frac{\langle (\bm{v}^i-\langle\bm{v}^i\rangle)\cdot (\bm{v}^{i+1}-\langle\bm{v}^{i+1}\rangle) \rangle}{\sqrt{\sigma^i\sigma^{i+1}}}
+%\end{equation}
+%Iterations are performed until either convergence ($\chi<tol$) or maximal number of non-linear iterations ($it_{max}$) is reached.
+where $\mathbb{K}$ is the Stiffness matrix and $\bm{f}$ is the right hand side vector \citep{Spiegelman2016,Glerum2018}.  The $L_2$-norm is extracted from $\bm{\mathcal{R}}^i$ and it is normalised using the $L_2$-norm extracted from $\bm{f}^0$. Iterations are performed until either convergence ($\frac{||\bm{\mathcal{R}}^i||_2}{||\bm{f}^0||_2}<tol$) or maximal number of non-linear iterations ($it_{max}$) is reached.
 
 \section{The energy equation}\label{sec:en_eq}
 The stabilisation of the advection term of the energy equation (Eq. \ref{eq:energy}) needed to avoid possible oscillations in the thermal solution in the case when advection dominates over diffusion, is implemented by means of a streamline-upwind Petrov–Galerkin (SUPG) method, for which the advection term is modified follows the discussion in \citet{Thieulot2011} and \citet{Thieulot2014} (see Section \ref{sec:advection} for benchmark). The total internal heat production $H_{tot}$ in Eq. \ref{eq:energy} includes radiogenic heating $H_r$, shear heating $H_s$ and adiabatic heating $H_a$, where
