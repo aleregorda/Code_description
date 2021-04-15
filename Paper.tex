@@ -26,8 +26,9 @@
 \begin{document}
 
 \section{Introduction}\label{sec:intro}
-This supplement includes a description of the code, with a presentation of the features implemented followed by results of extensive benchmarks listed in Table \ref{tab:list}, implemented 
-to verify that the code solves correctly a large range of problems. Description and results of the benchmarks are shown in Section \ref{sec:benchmark}.
+This supplement includes a description of the code, with a presentation of the features implemented followed by results of extensive benchmarks listed in
+Table \ref{tab:list}, implemented to verify that the code solves correctly a large range of problems. Description and results of the benchmarks are shown
+in Section \ref{sec:benchmark}.
 
 \begin{table}[H]
 \caption{List of benchmarks implemented for each feature of the code.}
@@ -148,14 +149,14 @@ The Earth's surface can be treated by means of either the so-called sticky-air o
 sticky-air method the surface is approximated with the introduction of a buoyant layer with a viscosity at least four orders of magnitude lower than the crust
 \citep{Schmeling2008,Crameri2012} and the interface between lithosphere and air is defined using a chain of passive markers that are advected as the Lagrangian
 markers. The correctness of the evolution of the markers chain is tested with the experiment of a 2D time-dependent Stokes sphere below a free surface and
-compared with results from ASPECT\footnote{\url{https://aspect.geodynamics.org/}} \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} (Section \ref{sec:sphere}). In the true free surface
-case the top boundary is assumed stress-free and velocities are not fixed. In this case topography variations are described by vertical deformations of the
-mesh that depend on the velocity field of the nodes that identify the free surface, while horizontal deformations are not taken into account. This procedure
-is known as the Arbitrary Lagrangian-Eulerian (ALE) method and its implementation follows the technique described in \citet{Thieulot2011}. However, although
-the implementation of a true free surface better reproduces laboratory experiment, extremely small time steps can be necessary to maintain stability
-\citep{Kaus2010a,Quinquis2011,Thieulot2014}. Therefore, the stability algorithm proposed by \citet{Kaus2010a} is implemented to avoid instabilities due to
-high density differences at the free surface when using too large time steps. The implementation of this algorithm are tested by performing the experiment
-described by \citet{Kaus2010a} (Section \ref{sec:stab}).
+compared with results from ASPECT\footnote{\url{https://aspect.geodynamics.org/}} \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} (Section
+\ref{sec:sphere}). In the true free surface case the top boundary is assumed stress-free and velocities are not fixed. In this case topography variations are
+described by vertical deformations of the mesh that depend on the velocity field of the nodes that identify the free surface, while horizontal deformations are
+not taken into account. This procedure is known as the Arbitrary Lagrangian-Eulerian (ALE) method and its implementation follows the technique described in
+\citet{Thieulot2011}. However, although the implementation of a true free surface better reproduces laboratory experiment, extremely small time steps can be
+necessary to maintain stability \citep{Kaus2010a,Quinquis2011,Thieulot2014}. Therefore, the stability algorithm proposed by \citet{Kaus2010a} is implemented
+to avoid instabilities due to high density differences at the free surface when using too large time steps. The implementation of this algorithm are tested by
+performing the experiment described by \citet{Kaus2010a} (Section \ref{sec:stab}).
 
 The topography relaxation benchmark proposed by \citet{Crameri2012} is performed to verify that the code correctly recovers topography variations in case of
 both the sticky-air and the true free surface method (Section \ref{sec:crameri}). Finally, Section \ref{sec:subduction} show the results of the spontaneous
@@ -251,8 +252,17 @@ iteration $i$ via the nonlinear residual $\bm{\mathcal{R}}^i$ that can be determ
 %\end{equation}
 %Iterations are performed until either convergence ($\chi<tol$) or maximal number of non-linear iterations ($it_{max}$) is reached.
 where $\mathbb{K}$ is the Stiffness matrix and $\bm{f}$ is the right hand side vector \citep{Spiegelman2016,Glerum2018}.  The $L_2$-norm is extracted from
-$\bm{\mathcal{R}}^i$ and it is normalised using the $L_2$-norm extracted from $\bm{f}^0$. Iterations are performed until either convergence
-($\frac{||\bm{\mathcal{R}}^i||_2}{||\bm{f}^0||_2}<tol$) or maximal number of non-linear iterations ($it_{max}$) is reached.
+$\bm{\mathcal{R}}^i$ and it is normalised as follows
+\begin{equation}\label{eq:convergence}
+\frac{||\bm{\mathcal{R}}^i||_2}{||\bm{\mathcal{R}}^0||_2}
+\end{equation}
+where $||\bm{\mathcal{R}}^0||_2$ is the $L_2$-norm extracted at the first nonlinear iteration.
+Since often the normalised nonlinear residual drop very quickly over the first 2-3 iterations, also the $L_2$-norm of the velocity residual is calculated as
+\begin{equation}\label{eq:convergence_vel}
+\frac{||\bm{v}_1-\bm{v}_{1-1}||_2}{||\bm{v}_{i-1}||_2}
+\end{equation}
+Iterations are performed until either maximal number of non-linear iterations ($it_{max}$) is reached or both the normalised nonlinear residual and the
+velocity residual converge under a defined tolerance $tol$.
 
 \section{The energy equation}\label{sec:en_eq}
 The stabilisation of the advection term of the energy equation (Eq. \ref{eq:energy}) needed to avoid possible oscillations in the thermal solution in the case
@@ -711,12 +721,15 @@ set to 1000. A 800 m-wide and 400 m-height inclusion with $\eta_b=$ \SI{e20}{\pa
 domain at $x=L_x/2$. The inclusion is surrounded by a non-linear viscous medium with $\rho_m=$ \SI{2700}{\kg\per\cubic\m}, an initial viscosity of
 \SI{e23}{\pascal\s}, a linear viscous viscosity of \SI{e25}{\pascal\s} and a cohesion of \SI{40}{\mega\pascal}. Velocities are set to free slip conditions at
 the bottom of the domain and the top is open. Velocities on sides of the domain are fixed to $u=$ \SI{+-2e-11}{\m\per\s} and $v=0$. The experiment is performed
-in compressional and extensional contexts with an angle of internal friction $\phi$ of the non-linear medium variable between 0° and 20°.
+in compressional and extensional contexts with an angle of internal friction $\phi$ of the non-linear medium variable between 0° and 30°.
 
 As expected, two shear bands stem from the inclusion with variable angles in relation to both the dynamics context and the internal friction angle. Shear band
 angles formed at 45° for $\phi=0$° in both extensional and compressional contexts (Fig. \ref{fig:brick_beam}a), while they are different in case of $\phi\neq0$°.
-Shear band angles in case of $\phi=20$° are shown for compression and extension in Fig. \ref{fig:brick_beam}b  and c, respectively. Results for internal friction
-angles from 0° to 20° are plotted in Fig. \ref{fig:brick}, in comparison with theoretical Roscoe, Arthur and Coulomb shear band angles. 
+Shear band angles in case of $\phi=20$° are shown for compression and extension in Fig. \ref{fig:brick_beam}b  and c, respectively. Values of shear band angles
+as function of internal friction angles from 0° to 30° are extracted at different depths and minimum and maximum values are plotted in Fig. \ref{fig:brick},
+in comparison with theoretical Roscoe, Arthur and Coulomb shear band angles. For all tests the tolerance for nonlinear convergence is defined $tol=10^{-7}$
+and none converges before the maximum number of iterations ($it_{max}=1000$) is reached. However, tests with internal friction angles up to 15° show a constant
+decrease of the velocity residuals, which can not be observed for for tests with higher internal friction angles (Fig. \ref{fig:convergence}).
 
 \begin{figure}
 \centering
@@ -730,9 +743,18 @@ respectively).}
 \centering
 \noindent\includegraphics[width=400px]{./Figures/Brick.pdf}
 \caption{Shear band angles predicted for the brick experiment in case of compressional and extensional contexts as function of different internal angle of
-friction (purple line and dots), compared with theoretical Roscoe, Artur and Coulomb angles (orange, blue and green lines, respectively).}
+friction (continuous black line and red dots), compared with theoretical Roscoe, Artur and Coulomb angles (discontinuous black lines). Red lines indicate the
+range of angles calculated at different depths.}
 \label{fig:brick}
 \end{figure}
+
+\begin{figure}
+  \centering
+  \noindent\includegraphics[width=500px]{./Figures/convergence.pdf}
+  \caption{Convergence rates for all tests. Normalised residuals (left column) are compared with velocity residuals (right column) for extensional (first row)
+  and compressional (second row) settings.}
+  \label{fig:convergence}
+  \end{figure}
 
 \subsection{Advection stabilisation}\label{sec:advection}
 The 1D advection problem proposed by \citet{Donea2003} and \citet{Thieulot2011} is performed to verify the effectiveness of the SUPG method to stabilise the
