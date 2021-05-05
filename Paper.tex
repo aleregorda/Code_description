@@ -1,4 +1,4 @@
-\documentclass[hidelinks,11pt,a4paper]{article}
+\documentclass[hidelinks,10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -6,12 +6,14 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{multirow}
 \usepackage[cm]{fullpage}
 \usepackage[round]{natbib}
 \bibliographystyle{abbrvnat}
 \usepackage{doi}
 \usepackage{bm}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \hypersetup{
     colorlinks,
     linkcolor={blue},
@@ -34,23 +36,22 @@ in Section \ref{sec:benchmark}.
 \caption{List of benchmarks implemented for each feature of the code.}
 \centering
 \begin{tabular}{| l | l |}
-\hline
+\toprule
  \textbf{Feature}  & \textbf{Benchmark}  \\
-\hline
-\hline
+\midrule
   Solver  & Stokes flow   \\
 \hline
-  4th-order Runge-Kutta  &  \\
-  markers advection  & Zalesak disk   \\
+  4th-order Runge-Kutta  & \multirow{2}{*}{Zalesak disk} \\
+  markers advection  &  \\
 \hline
-  Momentum equation  & Poiseuille flow   \\
+  \multirow{4}{*}{Momentum equation}  & Poiseuille flow   \\
     & Instantaneous 2D sphere   \\
     & Rayleigh-Taylor experiment  \\
     & Falling block  \\
 \hline
-  Sticky air and  & 2D Stokes sphere \\
-  free surface  & Stabilisation algorithm   \\
-  & Topography relaxation   \\
+    & 2D Stokes sphere \\
+    Sticky air and  & Stabilisation algorithm   \\
+    free surface & Topography relaxation   \\
   & Spontaneous subduction   \\
 \hline
   Erosion and sedimentation  & -  \\
@@ -59,17 +60,17 @@ in Section \ref{sec:benchmark}.
    visco-plasticity & Indenter   \\
     & Brick   \\
 \hline
-  Energy equation  & Advection stabilisation   \\
+  \multirow{5}{*}{Energy equation}  & Advection stabilisation   \\
     & Simple shear heating \\
     & Shear and adiabatic heating \\
     & Mantle convection   \\
     & Thin layer entrainment   \\
 \hline
-  Phase changes  &  \\
-  and hydration  & Hydrated sinking cylinder   \\
+  Phase changes  & \multirow{2}{*}{Hydrated sinking cylinder} \\
+  and hydration  &  \\
 \hline
   Melting & Experimental melting curves \\
-\hline
+\bottomrule
 \end{tabular}
 \label{tab:list}
 \end{table}
@@ -253,7 +254,7 @@ iteration $i$ via the nonlinear residual $\bm{\mathcal{R}}^i$ that can be determ
 %Iterations are performed until either convergence ($\chi<tol$) or maximal number of non-linear iterations ($it_{max}$) is reached.
 where $\mathbb{K}$ is the Stiffness matrix and $\bm{f}$ is the right hand side vector \citep{Spiegelman2016,Glerum2018}.  The $L_2$-norm is extracted from
 $\bm{\mathcal{R}}^i$ and it is normalised as follows
-\begin{equation}\label{eq:convergence}
+\begin{equation}\label{eq:convergence_res}
 \frac{||\bm{\mathcal{R}}^i||_2}{||\bm{\mathcal{R}}^0||_2}
 \end{equation}
 where $||\bm{\mathcal{R}}^0||_2$ is the $L_2$-norm of the first nonlinear iteration.
@@ -371,17 +372,17 @@ molten rock \citep{Gerya2003a,Gerya2007,Tackley2010}.
 In order to determine the accuracy of velocity and pressure field of the benchmarks, the $L_2$-norm is computed by numerical integration on the Gauss-Legendre
 quadrature points. $L_2$-norm for pressure and velocity errors can be evaluated as
 \begin{eqnarray}
-err_p&=&\sqrt{\sum_{i=1}^{n_e}\sum_{q=1}^{n_q}\left(|p^n_i(r_q)-p^a_i(r_q)|^2\right)w_q|J_q|}\nonumber \\
-err_v&=&\sqrt{\sum_{i=1}^{n_e}\sum_{q=1}^{n_q}\left(|u^n_i(r_q)-u^a_i(r_q)|^2+|v^n_i(r_q)-v^a_i(r_q)|^2\right)w_q|J_q|}\nonumber
+\textrm{err}_p&=&\sqrt{\sum_{i=1}^{n_e}\sum_{q=1}^{n_q}\left(|p^n_i(r_q)-p^a_i(r_q)|^2\right)w_q|J_q|}\nonumber \\
+\textrm{err}_v&=&\sqrt{\sum_{i=1}^{n_e}\sum_{q=1}^{n_q}\left(|u^n_i(r_q)-u^a_i(r_q)|^2+|v^n_i(r_q)-v^a_i(r_q)|^2\right)w_q|J_q|}\nonumber
 \end{eqnarray}
 respectively, where $n_e$ is the number of elements, $n_q$ is the number of quadrature points per element, $p^n_i(r_q)$ and $p^a_i(r_q)$ are the numerical and
 analytical pressure, respectively, in each quadrature point $q$, $w_q$  and $J_q$ are the weight and the Jacobian at the quadrature point
 $q$, $u^n_i(r_q)$, $v^n_i(r_q)$, $u^a_i(r_q)$ and $v^a_i(r_q)$ are the numerical and analytical velocities, respectively, in each quadrature point $q$.
 
 Other important quantities calculated in some benchmarks are the root-mean-square velocity and the Nusselt number, calculated as
-\[v_{rms}=\sqrt{\frac{1}{V_{\Omega}}\int_{\Omega}|\bm{v}|^2 d\Omega}\]
+\[v_{\textrm{rms}}=\sqrt{\frac{1}{V_{\Omega}}\int_{\Omega}|\bm{v}|^2 d\Omega}\]
 and
-\[Nu=\frac{\int_{top}\bm{\nabla} T \cdot \bm{n} ds}{\int_{bottom}T ds}\]
+\[\textrm{Nu}=\frac{\int_{top}\bm{\nabla} T \cdot \bm{n} ds}{\int_{bottom}T ds}\]
 respectively.
 
 \subsection{Stokes flow}\label{sec:stokes}
@@ -493,15 +494,15 @@ We distinguish three different types of velocity boundary conditions:
 \end{enumerate}
 All three cases are performed for different grid resolutions, between \num{16x16} and \num{512x512} elements with 50 randomly distributed markers per element,
 and different average schemes for the viscosity (harmonic, geometric and arithmetic). The velocity in the centre of the sphere $\bm{v}(0.5;0.5)$), minimum and
-maximum velocities ($u_{min}$, $u_{max}$, $v_{min}$, $v_{max}$) and pressures ($p_{min}$, $p_{max}$) on the entire domain, $v_{rms}$ and average pressure on the
+maximum velocities ($u_{min}$, $u_{max}$, $v_{min}$, $v_{max}$) and pressures ($p_{min}$, $p_{max}$) on the entire domain, $v_{\textrm{rms}}$ and average pressure on the
 entire domain ($p_{avg}$) are compared with solutions generated by ASPECT \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and all results
-can be found at \url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere2D}. Results in terms of the $v_{rms}$ for NS model are also shown
+can be found at \url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere2D}. Results in terms of the $v_{\textrm{rms}}$ for NS model are also shown
 in Fig. \ref{fig:inst_sphere}.
 
 \begin{figure}
 \centering
 \noindent\includegraphics[width=400px]{./Figures/vrms_NS.pdf}
-\caption{$v_{rms}$ as function of element size for the instantaneous 2D sphere experiment in case of no slip boundary conditions and with different average
+\caption{$v_{\textrm{rms}}$ as function of element size for the instantaneous 2D sphere experiment in case of no slip boundary conditions and with different average
 schemes for the viscosity. Results are compared with results obtained by other numerical codes.}
 \label{fig:inst_sphere}
 \end{figure}
@@ -513,13 +514,13 @@ with the lighter fluid at the bottom. The initial interface between the fluids i
 is performed with different grid sizes (\num{50x50}, \num{80x80}, \num{100x100} and \num{256x256}). A total of 1960000 markers are randomly distributed at the
 beginning of the simulation. Velocity boundary conditions are set to no slip at the top and the bottom, and to free slip at the sides of the domain.
 
-$v_{rms}$ as function of time is reported in Fig. \ref{fig:RT}, matching well with results shown by \citet{vanKeken1997}, \citet{Tackley2003} and
+$v_{\textrm{rms}}$ as function of time is reported in Fig. \ref{fig:RT}, matching well with results shown by \citet{vanKeken1997}, \citet{Tackley2003} and
 \citet{Thieulot2014}. Fig. \ref{fig:rayleigh} shows the evolution of the experiment at different time steps.
 
 \begin{figure}
 \centering
 \noindent\includegraphics[width=400px]{./Figures/RT.pdf}
-\caption{$v_{rms}$ of the Rayleigh-Taylor experiment as function of time for different resolution of the grid.}
+\caption{$v_{\textrm{rms}}$ of the Rayleigh-Taylor experiment as function of time for different resolution of the grid.}
 \label{fig:RT}
 \end{figure}
 
@@ -568,13 +569,13 @@ number is set to 0.25. The experiments run for 200 s using grid resolutions from
 per element, and for different average schemes for the viscosity. The interface between the fluid and the air is tracked by means of the markers chain. Results
 in terms of velocity and pressure fields and topography variations are compared with results obtained with ASPECT
 \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and they can be found at
-\url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere_fs2D}. Results in terms of the $v_{rms}$ in case of an arithmetic average are also
+\url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere_fs2D}. Results in terms of the $v_{\textrm{rms}}$ in case of an arithmetic average are also
 shown in Fig. \ref{fig:inst_spherefs}.
 
 \begin{figure}
 \centering
 \noindent\includegraphics[width=400px]{./Figures/vrms_arithm.pdf}
-\caption{$v_{rms}$ for different grid resolutions as function of time for the 2D time-dependent Stokes sphere experiment in case of an arithmetic average.
+\caption{$v_{\textrm{rms}}$ for different grid resolutions as function of time for the 2D time-dependent Stokes sphere experiment in case of an arithmetic average.
 Results are compared with results obtained by ASPECT.}
 \label{fig:inst_spherefs}
 \end{figure}
@@ -830,40 +831,40 @@ acceleration $g_y=10^{10}Ra$. The experiment is performed with three different R
 resolution (between \num{32x32} and \num{128x128} elements). Both fluids have constant viscosity, initial density, heat capacity, thermal conductivity
 ($\eta= \rho_0= C_p = k=1$), reference temperature ($T_0=0$) and thermal expansion coefficient ($\alpha=10^{-10}$). Temperatures are set to 0 on top and 1 on
 bottom of the domain. Velocity boundary conditions are set to free slip on all sides. The initial temperature field is given by
-\[T(x,y)=(1-y)-0.01 \cos (\pi x) \sin (\pi x)\]
+\[T(x,y)=(1-y)+0.01 \cos (\pi x) \sin (\pi y)\]
 
-The solution generated by the code in terms of $v_{rms}$ (calculated as in Sec. \ref{sec:error}) and $Nu$ as function of time are reported for all the
-simulations in Fig. \ref{fig:mantle}. At the steady state, $v_{rms}$ and $Nu$ of all simulations converge well toward the values from \citet{Blankenbach1989},
+The solution generated by the code in terms of $v_{\textrm{rms}}$ (calculated as in Sec. \ref{sec:error}) and Nu as function of time are reported for all the
+simulations in Fig. \ref{fig:mantle}. At the steady state, $v_{\textrm{rms}}$ and Nu of all simulations converge well toward the values from \citet{Blankenbach1989},
 with lower errors for higher resolution grids (Table \ref{tab:mantle}).
 
 \begin{figure}
 \centering
 \noindent\includegraphics[width=400px]{./Figures/Convection.pdf}
-\caption{$v_{rms}$ (panels a, c and e) and $Nu$ (panels b, d and f) for the mantle convection benchmark as function of time for different grid resolution.
+\caption{$v_{\textrm{rms}}$ (panels a, c and e) and Nu (panels b, d and f) for the mantle convection benchmark as function of time for different grid resolution.
 Panels a and b show the results for $Ra=10^4$; Panels c and d show the results for $Ra=10^5$; panels e and f show the results for $Ra=10^6$. Purple lines
-indicate the convergence values for the $v_{rms}$ and the $Nu$ from \citet{Blankenbach1989} at the steady state.}
+indicate the convergence values for the $v_{\textrm{rms}}$ and the Nu from \citet{Blankenbach1989} at the steady state.}
 \label{fig:mantle}
 \end{figure}
 
 \begin{table}[H]
-\caption{Comparison between $v_{rms}$ and $Nu$ predicted by the code for the mantle convection experiment and same values as reported in literature.}
+\caption{Comparison between $v_{\textrm{rms}}$ and Nu predicted by the code for the mantle convection experiment and same values as reported in literature.}
 \centering
 \small
-\begin{tabular}{|p{0.09\textwidth}|p{0.05\textwidth}|p{0.24\textwidth}|p{0.15\textwidth}|p{0.1\textwidth}p{0.1\textwidth}p{0.1\textwidth}|}
-\hline
-  & & \citet{Blankenbach1989} & \citet{Thieulot2014} & & &   \\
+\begin{tabular}{|>{\centering}m{0.09\textwidth}|>{\centering}m{0.05\textwidth}|>{\centering}m{0.24\textwidth}|>{\centering}m{0.15\textwidth}|
+  >{\centering}m{0.1\textwidth} >{\centering}m{0.1\textwidth} >{\centering\arraybackslash}m{0.1\textwidth}|}
+\toprule
+& & \multirow{2}{*}{\citet{Blankenbach1989}} & \citet{Thieulot2014} & \multicolumn{3}{c|}{FALCON}  \\
  & & & \num{200x200} & \num{32x32} & \num{64x64} & \num{128x128}  \\
+\midrule
+\multirow{2}{*}{$Ra=10^4$} & $v_{\textrm{rms}}$ & $42.864947 \pm 0.000020$ & 42.867 & 42.83226 & 42.852793 & 42.861394  \\
+           & Nu      & $4.884409 \pm 0.000010$  & 4.882  & 4.781297 & 4.857475  & 4.877573   \\
 \hline
+\multirow{2}{*}{$Ra=10^5$} & $v_{\textrm{rms}}$ & $193.21454 \pm 0.00010$  & 193.255& 193.872643 & 193.377472 & 193.252290  \\
+           & Nu      & $10.534095 \pm 0.000010$ & 10.507 & 9.602514 & 10.270735  & 10.465629   \\
 \hline
- $Ra=10^4$ & $v_{rms}$ & $42.864947 \pm 0.000020$ & 42.867 & 42.83226 & 42.852793 & 42.861394  \\
-           & $Nu$      & $4.884409 \pm 0.000010$  & 4.882  & 4.781297 & 4.857475  & 4.877573   \\
-\hline
- $Ra=10^5$ & $v_{rms}$ & $193.21454 \pm 0.00010$  & 193.255& 193.872643 & 193.377472 & 193.252290  \\
-           & $Nu$      & $10.534095 \pm 0.000010$ & 10.507 & 9.602514 & 10.270735  & 10.465629   \\
-\hline
- $Ra=10^6$ & $v_{rms}$ & $833.98977 \pm 0.00020$  & 834.712& 848.091176 & 837.767911 & 834.945793  \\
-           & $Nu$      & $21.972465 \pm 0.000020$ & 21.695 & 15.999266 & 19.703682  & 21.306939   \\
-\hline
+\multirow{2}{*}{$Ra=10^6$} & $v_{\textrm{rms}}$ & $833.98977 \pm 0.00020$  & 834.712& 848.091176 & 837.767911 & 834.945793  \\
+           & Nu      & $21.972465 \pm 0.000020$ & 21.695 & 15.999266 & 19.703682  & 21.306939   \\
+\bottomrule
 \end{tabular}
 \label{tab:mantle}
 \end{table}
@@ -889,7 +890,7 @@ u_0&=&\frac{L_x^{7/3}}{(1+L_x^4)^{2/3}}\left(\frac{Ra}{2\sqrt{\pi}}\right)^{\fra
 Q&=&2\sqrt{\frac{L_x}{\pi u_0}}\nonumber
 \end{eqnarray}
 
-The experiment is performed with two grid resolution (\num{125x40} and \num{200x80} elements), with 100 markers per element and CFL of 0.25. $v_{rms}$
+The experiment is performed with two grid resolution (\num{125x40} and \num{200x80} elements), with 100 markers per element and CFL of 0.25. $v_{\textrm{rms}}$
 (see Sec. \ref{sec:error}) calculated for both the simulations match well with results from \citet{vanKeken1997} and obtained with ASPECT
 \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and ELEFANT \citep{Thieulot2014}, obtained with similar grid resolutions
 (Fig. \ref{fig:thin}). In addition, a variety of simulations with different resolutions and aspect ratios are performed to verify that the sensitivity of the
@@ -898,7 +899,7 @@ initial velocity field. Results match well with results from \citet{vanKeken1997
 \begin{figure}
 \centering
 \noindent\includegraphics[width=400px]{./Figures/vrms_thin.pdf}
-\caption{$v_{rms}$ for the thin layer experiment as function of time for different grid resolution. Results are compared with results obtained by
+\caption{$v_{\textrm{rms}}$ for the thin layer experiment as function of time for different grid resolution. Results are compared with results obtained by
 \citet{vanKeken1997} (black lines) and with ASPECT and ELEFANT.}
 \label{fig:thin}
 \end{figure}
@@ -906,13 +907,42 @@ initial velocity field. Results match well with results from \citet{vanKeken1997
 \begin{figure}
 \centering
 \noindent\includegraphics[width=400px]{./Figures/vrmszero.pdf}
-\caption{$v_{rms}$ at $t=0$ for the thin layer experiment as function of the element size for different aspect ratios of the elements. Results are compared
+\caption{$v_{\textrm{rms}}$ at $t=0$ for the thin layer experiment as function of the element size for different aspect ratios of the elements. Results are compared
 with results obtained by \citet{vanKeken1997} (black dots in the grey area) and with ASPECT and ELEFANT.}
 \label{fig:thin_initial}
 \end{figure}
 
 \subsection{Viscoplastic mantle convection}\label{sec:visco_mantle}
-This benchmark is performed as described in \citet{Tosi2015}.
+This benchmark is performed as described in \citet{Tosi2015} for Cases 1-5a. Table \ref{tab:visco_mantle}.WORK IN PROGRESS.
+
+\renewcommand{\arraystretch}{1.5}
+{\rowcolors{3}{white!100!}{gray!25!}
+\begin{table}[H]
+  \caption{Results of the viscoplastic mantle convection benchmark for Cases 1-4 compared with results obtained with ELEFANT and YACC (from \citealp{Tosi2015}).}
+  \centering
+  \resizebox{\textwidth}{!}{
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
+  \toprule
+    & \multicolumn{3}{c|}{\textbf{Case 1}} & \multicolumn{3}{c|}{\textbf{Case 2}} & \multicolumn{3}{c|}{\textbf{Case 3}} &
+    \multicolumn{3}{c|}{\textbf{Case 4}} \\
+   & FALCON & ELEFANT& YACC & FALCON& ELEFANT& YACC & FALCON & ELEFANT & YACC & FALCON & ELEFANT & YACC \\
+  \midrule
+   $\left\langle T \right\rangle$ & 0.7759 & 0.7758 & 0.7767 & & 0.6036 & 0.6058 & 0.7275 & 0.7275 & 0.7286 & & 0.5277 & 0.5289\\
+    Nu$^{top}$ & 3.4280 & 3.4214 & 3.4298 & & 8.5115 & 8.5278 & 3.0368 & 3.0347 & 3.0374 && 6.5912 & 6.5572 \\
+    Nu$^{bottom}$ & 3.3168 & 3.313 & 3.3143 & & 8.4465 & 8.3990 & 3.0086 & 2.9908 & 2.9628 && 6.5834 & 6.5243 \\
+    $v_{\textrm{rms}}$ & 249.901 & 249.134 & 251.7997 & & 140.7087 & 142.2020 & 100.2776 & 100.1208 & 100.9467 && 79.1105 & 79.6202 \\
+    $v_{\textrm{rms}}^{top}$ & 1.8907 & 1.8642 & 1.8298 & & 104.1228 & 105.1767 & 2.0832 & 2.0652 & 2.0374 && 74.7596 & 75.8414 \\
+    $u_{max}^{top}$ & 2.6340 & 2.6119 & 2.5516 & & 121.766 & 122.3238 & 2.9086 & 2.9019 & 2.8458 && 88.9146 & 89.2940 \\
+    $\eta_{min}$ & - & - & - & & $2.0600\times10^{-5}$ & $1.9853\times10^{-5}$ & $4.8129\times10^{-5}$ & $4.8080\times10^{-5}$ & $4.7907\times10^{-5}$ &
+    & $1.9860\times10^{-4}$ & $1.9174\times10^{-4}$ \\
+    $\eta_{max}$ & - & - & - & & 1.85 & 1.6095 & 0.9360 & 0.9023 & 1 && 1.52 & 1.6773 \\
+    $\left\langle W \right\rangle$ & 2.4299 & 2.4316 & 2.4583 & & 7.5665 & 7.6222 & 2.0387 & 2.0384 & 2.0400 && 5.6216 & 5.6512 \\
+    $\left\langle \Phi \right\rangle/Ra$ & 2.4311 & 2.4276 & 2.4333 & & 7.5585 & 7.6194 & 2.0386 & 2.0370 & 2.0335 && 5.6182 & 5.6463 \\
+    $\delta$ & 0.05\% & 0.16\% & 1.02\% & & 0.11\% & 0.04\% & $<$0.01\% & 0.07\% & 0.32\% && 0.06\% & 0.09\% \\
+  \bottomrule
+  \end{tabular}}
+  \label{tab:visco_mantle}
+  \end{table}
 
 \subsection{Sinking hydrated cylinder}\label{sec:quinquis}
 This experiment is performed as explained in \citet{Quinquis2014} and simulates the sinking of a cold, hydrated cylinder into a warm, dry mantle. The domain
