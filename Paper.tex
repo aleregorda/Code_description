@@ -29,48 +29,49 @@
 
 \section{Introduction}\label{sec:intro}
 This supplement includes a description of the code, with a presentation of the features implemented followed by results of extensive benchmarks listed in
-Table \ref{tab:list}, implemented to verify that the code solves correctly a large range of problems. Description and results of the benchmarks are shown
+Table \ref{tab:list}, implemented to verify that the code solves correctly a large range of problems. Description and results of all benchmarks are shown
 in Section \ref{sec:benchmark}.
 
 \begin{table}[H]
 \caption{List of benchmarks implemented for each feature of the code.}
 \centering
-\begin{tabular}{| l | l |}
+\begin{tabular}{| l | l | l |}
 \toprule
- \textbf{Feature}  & \textbf{Benchmark}  \\
+ \textbf{Feature}  & \textbf{Benchmark} & \textbf{Section} \\
 \midrule
-  Solver  & Stokes flow (Section \ref{sec:stokes})  \\
+  Solver  & Stokes flow & \ref{sec:stokes} \\
 \hline
-  4th-order Runge-Kutta  & \multirow{2}{*}{Zalesak disk (Section \ref{sec:runge})} \\
-  markers advection  &  \\
+  4th-order Runge-Kutta  & \multirow{2}{*}{Zalesak disk} & \multirow{2}{*}{\ref{sec:runge}} \\
+  markers advection  &  & \\
 \hline
-  \multirow{4}{*}{Momentum equation}  & Poiseuille flow (Section \ref{sec:poiseuille}) \\
-    & Instantaneous 2D sphere (Section \ref{sec:ist_sphere})   \\
-    & Rayleigh-Taylor experiment (Section \ref{sec:rayleigh})  \\
-    & Falling block (Section \ref{sec:block})  \\
+  \multirow{4}{*}{Momentum equation}  & Poiseuille flow & \ref{sec:poiseuille}\\
+    & Instantaneous 2D sphere & \ref{sec:ist_sphere} \\
+    & Rayleigh-Taylor experiment & \ref{sec:rayleigh} \\
+    & Falling block & \ref{sec:block} \\
 \hline
-    & 2D Stokes sphere (Section \ref{sec:sphere}) \\
-    Sticky air and  & Stabilisation algorithm (Section \ref{sec:stab})   \\
-    free surface & Topography relaxation (Section \ref{sec:crameri})   \\
-  & Spontaneous subduction (Section \ref{sec:subduction})   \\
+    & 2D Stokes sphere & \ref{sec:sphere} \\
+    Sticky air and  & Stabilisation algorithm & \ref{sec:stab} \\
+    free surface & Topography relaxation & \ref{sec:crameri} \\
+  & Spontaneous subduction & \ref{sec:subduction} \\
 \hline
-  Erosion and sedimentation  & -  \\
+  Erosion and sedimentation  & - & - \\
 \hline
-   Non-linear  & Slab detachment (Section \ref{sec:slab})   \\
-   visco-plasticity & Indenter (Section \ref{sec:indenter})   \\
-    & Brick (Section \ref{sec:brick})   \\
+   Non-linear  & Slab detachment & \ref{sec:slab} \\
+   visco-plasticity & Indenter & \ref{sec:indenter} \\
+    & Brick & \ref{sec:brick} \\
 \hline
-  \multirow{5}{*}{Energy equation}  & Advection stabilisation (Section \ref{sec:advection})   \\
-    & Simple shear heating (Section \ref{sec:simple_shear}) \\
-    & Shear and adiabatic heating (Section \ref{sec:shear}) \\
-    & Mantle convection (Section \ref{sec:mantle})   \\
-    & Thin layer entrainment (Section \ref{sec:thin})   \\
-    & Viscoplastic mantle convection (Section \ref{sec:visco_mantle})   \\
+  \multirow{3}{*}{Energy equation}  & Advection stabilisation & \ref{sec:advection} \\
+    & Simple shear heating & \ref{sec:simple_shear} \\
+    & Shear and adiabatic heating & \ref{sec:shear} \\
 \hline
-  Phase changes  & \multirow{2}{*}{Hydrated sinking cylinder (Section \ref{sec:quinquis})} \\
-  and hydration  &  \\
+\multirow{3}{*}{Energy + momentum} & Mantle convection & \ref{sec:mantle} \\
+& Thin layer entrainment & \ref{sec:thin} \\
+& Viscoplastic mantle convection & \ref{sec:visco_mantle} \\
 \hline
-  Melting & Experimental melting curves (Section \ref{sec:katz}) \\
+  Phase changes  & \multirow{2}{*}{Hydrated sinking cylinder} & \multirow{2}{*}{\ref{sec:quinquis}} \\
+  and hydration  &  & \\
+\hline
+  Melting & Experimental melting curves & \ref{sec:katz} \\
 \bottomrule
 \end{tabular}
 \label{tab:list}
