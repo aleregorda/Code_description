@@ -65,8 +65,8 @@ in Section \ref{sec:benchmark}.
     & Shear and adiabatic heating & \ref{sec:shear} \\
 \hline
 \multirow{3}{*}{Energy + momentum} & Mantle convection & \ref{sec:mantle} \\
-& Thin layer entrainment & \ref{sec:thin} \\
 & Viscoplastic mantle convection & \ref{sec:visco_mantle} \\
+& Thin layer entrainment & \ref{sec:thin} \\
 \hline
   Phase changes  & \multirow{2}{*}{Hydrated sinking cylinder} & \multirow{2}{*}{\ref{sec:quinquis}} \\
   and hydration  &  & \\
@@ -830,7 +830,7 @@ created using example ${Shear\_adiabatic\_heating.m}$ from Exercise 9.4 in \cite
 \subsection{Mantle convection}\label{sec:mantle}
 This problem is performed as presented by \citet{Blankenbach1989} (constant viscosity cases) and \citet{Thieulot2014}, in a 2D unit square domain with gravity
 acceleration $g_y=10^{10}Ra$. The experiment is performed with three different Rayleigh numbers ($Ra=10^4$, $10^5$ and $10^6$) and with different grid
-resolution (between \num{32x32} and \num{128x128} elements). Both fluids have constant viscosity, initial density, heat capacity, thermal conductivity
+resolution (between \num{32x32} and \num{128x128} elements). The fluid has constant viscosity, initial density, heat capacity, thermal conductivity
 ($\eta= \rho_0= C_p = k=1$), reference temperature ($T_0=0$) and thermal expansion coefficient ($\alpha=10^{-10}$). Temperatures are set to 0 on top and 1 on
 bottom of the domain. Velocity boundary conditions are set to free slip on all sides. The initial temperature field is given by
 \[T(x,y)=(1-y)+0.01 \cos (\pi x) \sin (\pi y)\]
@@ -871,51 +871,22 @@ indicate the convergence values for the $v_{\textrm{rms}}$ and the Nu from \cite
 \label{tab:mantle}
 \end{table}
 
-\subsection{Thin layer entrainment}\label{sec:thin}
-This experiment is performed as originally proposed by \citet{vanKeken1997} with two incompressible fluids in a rectangular domain with $L_x=2$ and $L_y=1$
-and gravity acceleration $g_y=10^{10}Ra$. The Rayleigh number and the compositional Rayleigh number are fixed to $Ra=300000$ and $Rc=450000$, respectively.
-Both fluids have constant viscosity, thermal conductivity, specific heat ($\eta=\rho=C_p=1$) and thermal expansion coefficient ($\alpha=10^{-10}$). Fluid 1
-has a density $\rho_1=1$, while fluid 2 is denser ($\rho_2=\rho_1+1.5 \cdot 10^{-10}$) and is placed at the bottom of the domain, for $y \leq 0.025$.
-Temperature are set to 0 on top and 1 on bottom of the domain. Velocity boundary conditions are set to free slip on all sides of the domain. The initial
-temperature field is given by
-\[T(x,y)=T_u(x,y)+T_l(x,y)+T_r(x,y)+T_s(x,y)-\frac{3}{2}\]
-with
-\begin{eqnarray}
-T_u(x,y)&=&\frac{1}{2}erf\left(\frac{1-y}{2}\sqrt{\frac{u_0}{x}}\right)\nonumber \\
-T_l(x,y)&=&1-\frac{1}{2}erf\left(\frac{y}{2}\sqrt{\frac{u_0}{L_x-x}}\right)\nonumber \\
-T_r(x,y)&=&\frac{1}{2}+\frac{Q}{2\sqrt{\pi}}\sqrt{\frac{u_0}{y+1}} \exp\left(-\frac{x^2u_0}{4y+4}\right)\nonumber \\
-T_s(x,y)&=&\frac{1}{2}-\frac{Q}{2\sqrt{\pi}}\sqrt{\frac{u_0}{2-y}} \exp\left(-\frac{(L_x-x)^2u_0}{8-4y}\right)\nonumber
-\end{eqnarray}
-and
-\begin{eqnarray}
-u_0&=&\frac{L_x^{7/3}}{(1+L_x^4)^{2/3}}\left(\frac{Ra}{2\sqrt{\pi}}\right)^{\frac{2}{3}}\nonumber \\
-Q&=&2\sqrt{\frac{L_x}{\pi u_0}}\nonumber
-\end{eqnarray}
-
-The experiment is performed with two grid resolution (\num{125x40} and \num{200x80} elements), with 100 markers per element and CFL of 0.25. $v_{\textrm{rms}}$
-(see Sec. \ref{sec:error}) calculated for both the simulations match well with results from \citet{vanKeken1997} and obtained with ASPECT
-\citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and ELEFANT \citep{Thieulot2014}, obtained with similar grid resolutions
-(Fig. \ref{fig:thin}). In addition, a variety of simulations with different resolutions and aspect ratios are performed to verify that the sensitivity of the
-initial velocity field. Results match well with results from \citet{vanKeken1997} (in the grey area) and \citet{Thieulot2014} (Fig. \ref{fig:thin_initial}).
-
-\begin{figure}
-\centering
-\noindent\includegraphics[width=400px]{./Figures/vrms_thin.pdf}
-\caption{$v_{\textrm{rms}}$ for the thin layer experiment as function of time for different grid resolution. Results are compared with results obtained by
-\citet{vanKeken1997} (black lines) and with ASPECT and ELEFANT.}
-\label{fig:thin}
-\end{figure}
-
-\begin{figure}
-\centering
-\noindent\includegraphics[width=400px]{./Figures/vrmszero.pdf}
-\caption{$v_{\textrm{rms}}$ at $t=0$ for the thin layer experiment as function of the element size for different aspect ratios of the elements. Results are compared
-with results obtained by \citet{vanKeken1997} (black dots in the grey area) and with ASPECT and ELEFANT.}
-\label{fig:thin_initial}
-\end{figure}
-
 \subsection{Viscoplastic mantle convection}\label{sec:visco_mantle}
-This benchmark is performed as Cases 1-5a described in \citet{Tosi2015}. Table \ref{tab:tosi_setup}. Table \ref{tab:visco_mantle}.WORK IN PROGRESS.
+This benchmark is performed as Cases 1-5a described in \citet{Tosi2015} in a 2D unit square domain with two different grid resolutions of \num{32x32} 
+and \num{100x100} elements. Reference viscosity, reference density, heat capacity, thermal conductivity and thermal expansion coefficient are fixed to a constant
+value of 1 ($\eta_0= \rho_0= C_p = k=\alpha=1$), while the gravity has been chosen as $g_y=10^2$, in order to obtain a Rayleigh number $Ra=10^2$. Temperatures
+are set to 0 on top and 1 on bottom of the domain. Velocity boundary conditions are set to free slip on all sides. The initial temperature field is given by
+\[T(x,y)=(1-y)+0.01 \cos (\pi x) \sin (\pi y)\].
+The viscosity ﬁeld $\eta$ is calculated as the harmonic average between a linear part $\eta_{lin}$ that depends on temperature only or on temperature and 
+depth $y$ and a nonlinear-plastic part $\eta_{pl}$ that depends on the strain rate $\dot{\bm{\epsilon}}$, as follows
+\[\eta(T,y,\dot{\bm{\epsilon}})=2\left(\frac{1}{\eta_{lin}(T,y)}+\frac{1}{\eta_{pl}(\dot{\bm{\epsilon}})}\right)^{-1}\]
+The linear and the nonlinear-plastic parts of the viscosity are calculated following \citet{Tosi2015} as follows
+\[\eta_{lin}(T,y)=\exp(-\ln(\Delta\eta_T)T+\ln(\Delta\eta_y)y)\]
+\[\eta_{pl}(\dot{\bm{\epsilon}})=\eta^*+\frac{\sigma_Y}{\sqrt{\dot{\bm{\epsilon}}:\dot{\bm{\epsilon}}}}\]
+where $\Delta\eta_T$, $\Delta\eta_y$, $\eta^*$ and $\sigma_Y$ are parameters chosen as listed in Table \ref{tab:tosi_setup}.
+
+For each case, some diagnostic quantities measured at the steady state are reported in Table \ref{tab:visco_mantle} (see Section \ref{sec:error} for 
+the computation of all the quantities), showing a well fit with results described in \citet{Tosi2015}. 
 
 %\renewcommand{\arraystretch}{1.5}
 %{\rowcolors{3}{white!100!}{gray!25!}
@@ -972,7 +943,7 @@ This benchmark is performed as Cases 1-5a described in \citet{Tosi2015}. Table \
 \renewcommand{\arraystretch}{1.5}
 %{\rowcolors{3}{gray!25!}{white!100!}
 \begin{table}[H]
-  \caption{Results of the viscoplastic mantle convection benchmark for different grid resolutions in Cases 1-4 compared with results obtained with ELEFANT
+  \caption{Results of the viscoplastic mantle convection benchmark for different grid resolutions in Cases 1-5 compared with results obtained with ELEFANT
   and YACC ($100\times100$ elements, from \citealp{Tosi2015}) and in Stone 28 ($32\times32$ elements, from
   \url{https://github.com/cedrict/fieldstone/tree/master/python_codes/fieldstone_28}).}
   \centering
@@ -1034,10 +1005,73 @@ This benchmark is performed as Cases 1-5a described in \citet{Tosi2015}. Table \
 %       FALCON & $32\times32$ & 0.5334 & 6.4679 & 6.3435 & 80.6153 & 76.0511 & 90.2058 & $2.0393\times10^{-4}$ & 0.6453 & 5.6676 & 5.6698 & 0.04\% \\
 %       \rowcolor{gray!25!}
        FALCON & $100\times100$ & 0.5279 & 6.5897 & 6.5830 & 79.1220 & 75.0715 & 88.8484 & $1.9693\times10^{-4}$ & 1.4133 & 5.6127 & 5.6113 & 0.03\% \\
+       \midrule
+       \multicolumn{13}{|c|}{\textbf{Case 5}} \\
+       \midrule
+       Code & Resolution & $P$ & $\left\langle T \right\rangle_{min}$ & $\left\langle T \right\rangle_{max}$ & Nu$^{top}_{min}$ & Nu$^{top}_{max}$ &
+       $v_{\textrm{rms}}^{min}$ & $v_{\textrm{rms}}^{max}$ & \multicolumn{2}{c}{$(\left\langle \Phi \right\rangle/Ra)_{min}$} & 
+       \multicolumn{2}{c|}{$(\left\langle \Phi \right\rangle/Ra)_{max}$} \\
+       \hline
+       \rowcolor{gray!25!}
+         YACC & $100\times100$ & 0.0792 & 0.6543 & 0.6722 & 2.6950 & 7.2792 & 41.9813 & 98.8230 & \multicolumn{2}{c}{1.4347} & 
+         \multicolumn{2}{c|}{9.2748} \\
+         ELEFANT & $100\times100$ & 0.076 & 0.6514 & 0.6693 & 2.6808 & 7.3506 & 41.2578 & 100.089 & \multicolumn{2}{c}{1.3324} & 
+         \multicolumn{2}{c|}{9.5289} \\
+         \rowcolor{gray!25!}
+         Stone 28 & $32\times32$ & 0.0764 & 0.6521 & 0.6697 & 2.6912 & 7.0763 & 41.61 & 98.183 & \multicolumn{2}{c}{-} & 
+         \multicolumn{2}{c|}{-} \\
+     %    FALCON & $32\times32$ & & 0.7750 & 3.4381 & 2.7363 & 248.3337 & 2.0022 & 2.7813 & \multicolumn{2}{c}{-} & 
+     %     \multicolumn{2}{c|}{-} \\
+     %    \rowcolor{gray!25!}
+         FALCON & $100\times100$ & 0.0775 & 0.6519 & 0.6697 & 2.6847 & 7.3629 & 41.5256 & 99.5466 & \multicolumn{2}{c}{1.3399} & 
+         \multicolumn{2}{c|}{9.3993} \\
   \bottomrule
   \end{tabular}}
   \label{tab:visco_mantle}
   \end{table}
+
+\subsection{Thin layer entrainment}\label{sec:thin}
+This experiment is performed as originally proposed by \citet{vanKeken1997} with two incompressible fluids in a rectangular domain with $L_x=2$ and $L_y=1$
+and gravity acceleration $g_y=10^{10}Ra$. The Rayleigh number and the compositional Rayleigh number are fixed to $Ra=300000$ and $Rc=450000$, respectively.
+Both fluids have constant viscosity, thermal conductivity, specific heat ($\eta=\rho=C_p=1$) and thermal expansion coefficient ($\alpha=10^{-10}$). Fluid 1
+has a density $\rho_1=1$, while fluid 2 is denser ($\rho_2=\rho_1+1.5 \cdot 10^{-10}$) and is placed at the bottom of the domain, for $y \leq 0.025$.
+Temperature are set to 0 on top and 1 on bottom of the domain. Velocity boundary conditions are set to free slip on all sides of the domain. The initial
+temperature field is given by
+\[T(x,y)=T_u(x,y)+T_l(x,y)+T_r(x,y)+T_s(x,y)-\frac{3}{2}\]
+with
+\begin{eqnarray}
+T_u(x,y)&=&\frac{1}{2}erf\left(\frac{1-y}{2}\sqrt{\frac{u_0}{x}}\right)\nonumber \\
+T_l(x,y)&=&1-\frac{1}{2}erf\left(\frac{y}{2}\sqrt{\frac{u_0}{L_x-x}}\right)\nonumber \\
+T_r(x,y)&=&\frac{1}{2}+\frac{Q}{2\sqrt{\pi}}\sqrt{\frac{u_0}{y+1}} \exp\left(-\frac{x^2u_0}{4y+4}\right)\nonumber \\
+T_s(x,y)&=&\frac{1}{2}-\frac{Q}{2\sqrt{\pi}}\sqrt{\frac{u_0}{2-y}} \exp\left(-\frac{(L_x-x)^2u_0}{8-4y}\right)\nonumber
+\end{eqnarray}
+and
+\begin{eqnarray}
+u_0&=&\frac{L_x^{7/3}}{(1+L_x^4)^{2/3}}\left(\frac{Ra}{2\sqrt{\pi}}\right)^{\frac{2}{3}}\nonumber \\
+Q&=&2\sqrt{\frac{L_x}{\pi u_0}}\nonumber
+\end{eqnarray}
+
+The experiment is performed with two grid resolution (\num{125x40} and \num{200x80} elements), with 100 markers per element and CFL of 0.25. $v_{\textrm{rms}}$
+(see Sec. \ref{sec:error}) calculated for both the simulations match well with results from \citet{vanKeken1997} and obtained with ASPECT
+\citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and ELEFANT \citep{Thieulot2014}, obtained with similar grid resolutions
+(Fig. \ref{fig:thin}). In addition, a variety of simulations with different resolutions and aspect ratios are performed to verify that the sensitivity of the
+initial velocity field. Results match well with results from \citet{vanKeken1997} (in the grey area) and \citet{Thieulot2014} (Fig. \ref{fig:thin_initial}).
+
+\begin{figure}
+\centering
+\noindent\includegraphics[width=400px]{./Figures/vrms_thin.pdf}
+\caption{$v_{\textrm{rms}}$ for the thin layer experiment as function of time for different grid resolution. Results are compared with results obtained by
+\citet{vanKeken1997} (black lines) and with ASPECT and ELEFANT.}
+\label{fig:thin}
+\end{figure}
+
+\begin{figure}
+\centering
+\noindent\includegraphics[width=400px]{./Figures/vrmszero.pdf}
+\caption{$v_{\textrm{rms}}$ at $t=0$ for the thin layer experiment as function of the element size for different aspect ratios of the elements. Results are compared
+with results obtained by \citet{vanKeken1997} (black dots in the grey area) and with ASPECT and ELEFANT.}
+\label{fig:thin_initial}
+\end{figure}
 
 \subsection{Sinking hydrated cylinder}\label{sec:quinquis}
 This experiment is performed as explained in \citet{Quinquis2014} and simulates the sinking of a cold, hydrated cylinder into a warm, dry mantle. The domain
@@ -1065,14 +1099,14 @@ respectively) for the sinking hydrated cylinder experiment. Only markers with bo
 \label{fig:quinquis}
 \end{figure}
 
-\subsection{Melting curves}\label{sec:katz}
+\subsection{Mantle melting curves}\label{sec:katz}
 This instantaneous experiment is performed in order to recreate isobaric melting curves, as function of temperature, bulk water and content of water in the
 melt, to compare with melting curves obtained by \citet{Katz2003}. The domain is square with $L_x=L_y=100$ km, a grid resolution of \num{100x100} elements and
 25 markers per element. Density is set in the entire domain to \SI{3300}{\kg\per\cubic\m} and temperature increases from the sides to the centre from 1000° to
 1500°C. The experiment is performed for bulk water contents from 0 to 0.3 wt.\%.
 
 Fig. \ref{fig:fraction} shows isobaric melting curves for \SI{1}{\giga\pascal} (panel a) and \SI{3}{\giga\pascal} (panel b) calculated for different bulk water
-contents. The curves well match with those obtained by \citet{Katz2003}, showing the saturation at the solidus for bulk water of 0.2 and 0.3 wt.\%, indicating
+contents. The curves well match with those obtained for the mantle by \citet{Katz2003}, showing the saturation at the solidus for bulk water of 0.2 and 0.3 wt.\%, indicating
 that the code correctly determines melt fraction as function of pressure, temperature and bulk water content. Same results can be observed in Fig.
 \ref{fig:water}a, where isobaric and isothermal melting curves are shown as function of bulk water content. In addition, Fig. \ref{fig:water}b shows that the
 code correctly determines also the percentage of water in the melt as function of pressure, temperature and melt fraction.
