@@ -33,7 +33,8 @@ Table \ref{tab:list}, implemented to verify that the code solves correctly a lar
 in Section \ref{sec:benchmark}.
 
 \begin{table}[H]
-\caption{List of benchmarks implemented for each feature of the code.}
+\caption{List of benchmarks implemented for each feature of the code. Data of all benchmarks can be found at 
+\url{https://github.com/aleregorda/Benchmarks}}
 \centering
 \begin{tabular}{| l | l | l |}
 \toprule
@@ -381,11 +382,20 @@ respectively, where $n_e$ is the number of elements, $n_q$ is the number of quad
 analytical pressure, respectively, in each quadrature point $q$, $w_q$  and $J_q$ are the weight and the Jacobian at the quadrature point
 $q$, $u^n_i(r_q)$, $v^n_i(r_q)$, $u^a_i(r_q)$ and $v^a_i(r_q)$ are the numerical and analytical velocities, respectively, in each quadrature point $q$.
 
-Other important quantities calculated in some benchmarks are the root-mean-square velocity and the Nusselt number, calculated as
-\[v_{\textrm{rms}}=\sqrt{\frac{1}{V_{\Omega}}\int_{\Omega}|\bm{v}|^2 d\Omega}\]
-and
-\[\textrm{Nu}=\frac{\int_{top}\bm{\nabla} T \cdot \bm{n} ds}{\int_{bottom}T ds}\]
-respectively.
+Other quantities used as comparison with original benchmarks are the root-mean-square velocity over the whole domain and over the surface
+\begin{eqnarray}
+v_{\textrm{rms}}&=&\sqrt{\int_{\Omega}|\bm{v}|^2 d\Omega}\nonumber \\
+v_{\textrm{rms}}^{top}&=&\sqrt{\int_0^1 u^2 \bigg|_{y=1} dx}\nonumber
+\end{eqnarray}
+respectively, top and bottom Nusselt numbers
+\[\textrm{Nu}^{top/bottom}=-\int_0^1\frac{\partial T}{\partial y} \bigg|_{y=1/y=0} dx\]
+the average rate of work done against gravity
+\[\left\langle W \right\rangle=\int_{\Omega}T u_y d\Omega\]
+the average rate of viscous dissipation
+\[\left\langle \Phi \right\rangle=\int_{\Omega}\tau_{ij}\dot{\epsilon}_{ij} d\Omega\]
+and the percentage error between $\left\langle W \right\rangle$ and $\left\langle \Phi \right\rangle/Ra$
+\[\delta=\frac{\left|\left\langle W \right\rangle -\frac{\left\langle \Phi \right\rangle}{Ra} \right|}{\max \left(\left\langle W \right\rangle,
+\frac{\left\langle \Phi \right\rangle}{Ra}\right)}\times100\]
 
 \subsection{Stokes flow}\label{sec:stokes}
 The problem consists of determining velocity field $(u,v)$ and pressure $p$ in case of a manufactured solution with prescribed body forces such as
@@ -409,7 +419,7 @@ Fig. \ref{fig:errors}a shows that both velocity and pressure field converge to t
 theoretical convergence rate. The convergence of pressure, in contrast with the observation by \citet{Donea2003} for $Q_1 \times P_0$ elements, indicate the
 effectiveness of the smoothing procedure. Smoothed pressure field for grid resolution of \num{128x128} elements is shown in Fig. \ref{fig:errors}b (continuous
 red line), in comparison with the analytical solution (dashed blue line). Solve times and memory usage needed to generate the solution are shown in
-Fig. \ref{fig:MUMPS}.
+Fig. \ref{fig:MUMPS}. All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Solver/Stokes_Flow}.
 
 \begin{figure}
 \centering
@@ -436,7 +446,8 @@ v(x,y)&=&-2\pi\left(x-\frac{L_x}{2}\right)\nonumber
 \end{eqnarray}
 At $t=0$, the disk is centred at position $(0.5;0.75)$ with a radius $R=0.15$ and has a vertical fissure 0.05 wide and 0.2 high (orange in Fig. \ref{fig:runge}).
 As we expect, markers are back to their initial location after a $2\pi$ rotation ($t=1$, red, green and blue in Fig. \ref{fig:runge}), with an error of the
-final position that increase moving away from the centre, more evident in case of higher time steps or lower grid resolution (Fig. \ref{fig:runge_err}).
+final position that increase moving away from the centre, more evident in case of higher time steps or lower grid resolution (Fig. \ref{fig:runge_err}). 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Zalesak_Disk}.
 
 \begin{figure}
 \centering
@@ -469,7 +480,7 @@ p(x,y)&=&2\eta\left(\frac{L_x}{2}-x\right)\nonumber
 The velocity field predicted by the model follows the expected parabolic profile (Fig. \ref{fig:poiseuille}a and Fig. \ref{fig:poi_plot}a) and, in case of the
 classic penalty method with no iterations, the pressure is clearly related to the divergence by means of the penalty parameter (Fig. \ref{fig:poiseuille}b and
 c and Fig. \ref{fig:poi_plot}b). Fig. \ref{fig:poiseuille}d shows that one Uzawa iteration is sufficient to bring the divergence down to \num{e-15}, with no
-correlation with the pressure field.
+correlation with the pressure field. All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum_equation/Poiseuille%20Flow}.
 
 \begin{figure}
 \noindent\includegraphics[width=\textwidth]{./Figures/Poiseuille.pdf}
@@ -498,8 +509,9 @@ All three cases are performed for different grid resolutions, between \num{16x16
 and different average schemes for the viscosity (harmonic, geometric and arithmetic). The velocity in the centre of the sphere $\bm{v}(0.5;0.5)$), minimum and
 maximum velocities ($u_{min}$, $u_{max}$, $v_{min}$, $v_{max}$) and pressures ($p_{min}$, $p_{max}$) on the entire domain, $v_{\textrm{rms}}$ and average pressure on the
 entire domain ($p_{avg}$) are compared with solutions generated by ASPECT \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and all results
-can be found at \url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere2D}. Results in terms of the $v_{\textrm{rms}}$ for NS model are also shown
-in Fig. \ref{fig:inst_sphere}.
+can be found at \url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere2D} and 
+\url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum_equation/Instantaneous_2D_Sphere}. Results in terms of the $v_{\textrm{rms}}$ for NS model 
+are also shown in Fig. \ref{fig:inst_sphere}.
 
 \begin{figure}
 \centering
@@ -517,7 +529,8 @@ is performed with different grid sizes (\num{50x50}, \num{80x80}, \num{100x100} 
 beginning of the simulation. Velocity boundary conditions are set to no slip at the top and the bottom, and to free slip at the sides of the domain.
 
 $v_{\textrm{rms}}$ as function of time is reported in Fig. \ref{fig:RT}, matching well with results shown by \citet{vanKeken1997}, \citet{Tackley2003} and
-\citet{Thieulot2014}. Fig. \ref{fig:rayleigh} shows the evolution of the experiment at different time steps.
+\citet{Thieulot2014}. Fig. \ref{fig:rayleigh} shows the evolution of the experiment at different time steps. All data can be found at 
+\url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum_equation/Rayleigh_Taylor_experiment/ISOVISCOUS}.
 
 \begin{figure}
 \centering
@@ -545,7 +558,8 @@ than the surrounding fluid (Fig. \ref{fig:block}f).
 
 The velocity in the centre of the falling block at $t=0$ is measured for all experiments and, since the velocity should increase with density contrast, the
 quantity $\bm{v}/(\rho_b-\rho_f)$ is plotted as function of the viscosity contrast. All results perfectly match with those from \citet{Gerya2010b} and they
-line up on a single curve, demonstrating that the code can correctly deal with large viscosity and density contrasts (Fig. \ref{fig:falling}).
+line up on a single curve, demonstrating that the code can correctly deal with large viscosity and density contrasts (Fig. \ref{fig:falling}). All data can be 
+found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum_equation/Falling%20blocks}.
 
 \begin{figure}
 \noindent\includegraphics[width=300px]{./Figures/Block.pdf}
@@ -571,8 +585,9 @@ number is set to 0.25. The experiments run for 200 s using grid resolutions from
 per element, and for different average schemes for the viscosity. The interface between the fluid and the air is tracked by means of the markers chain. Results
 in terms of velocity and pressure fields and topography variations are compared with results obtained with ASPECT
 \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and they can be found at
-\url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere_fs2D}. Results in terms of the $v_{\textrm{rms}}$ in case of an arithmetic average are also
-shown in Fig. \ref{fig:inst_spherefs}.
+\url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere_fs2D} and
+\url{https://github.com/aleregorda/Benchmarks/tree/main/Surface_processes/Time_dependent_sphere}. Results in terms of the $v_{\textrm{rms}}$ in case of 
+an arithmetic average are also shown in Fig. \ref{fig:inst_spherefs}.
 
 \begin{figure}
 \centering
@@ -592,7 +607,8 @@ $x=L_x$ is tracked for each simulation, with or without the stabilisation algori
 
 The results show an instability (drunken sailor effect) increasing the time step in case that the stabilisation algorithm is not activated
 ($dt=$ \SI{4200}{\year}, green line in Fig. \ref{fig:stab}), as already observed by \citet{Kaus2010a} and \citet{Thieulot2014}. Activating the algorithm the
-instability is fixed and the simulation remains stable using time step up to \SI{50000}{\year} (red line in Fig. \ref{fig:stab}).
+instability is fixed and the simulation remains stable using time step up to \SI{50000}{\year} (red line in Fig. \ref{fig:stab}). All data can be 
+found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Surface_processes/Stabilisation_algorithm}.
 
 \begin{figure}
 \centering
@@ -617,7 +633,8 @@ The results show that a viscosity of the air of \SI{e18}{\pascal\s} is needed in
 for this problem, as pointed out by \citet{Crameri2012} (purple line in Fig. \ref{fig:crameri}). The case with a true free surface well follows the analytical
 solution (orange line in Fig. \ref{fig:crameri}). In particular, at the relaxation time in case of the true free surface predicts a maximum topography of
 \SI{2570}{\m}, with an error of \SI{6}{\m} with respect to the analytical solution. Results are also compared with results obtained with a free surface in
-UNDERWORLD (\num{256x64} elements) and SULEC (\num{401x201} elements) (with courtesy from \citealp{Crameri2012}).
+UNDERWORLD (\num{256x64} elements) and SULEC (\num{401x201} elements) (with courtesy from \citealp{Crameri2012}). All data can be 
+found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Surface_processes/Topography_relaxation}.
 
 \begin{figure}
 \centering
@@ -642,7 +659,8 @@ The maximum depth of the slab is tracked for all the simulations (Fig. \ref{fig:
 (i.e., \SI{e19}{\pascal\s}) enlighten a strong dependence of the sinking velocity with the chosen average scheme (dashed lines in Fig. \ref{fig:subduction}),
 while high viscous sticky air models (i.e., \SI{e21}{\pascal\s}) show a higher resistance at the trench, underestimating the correct solution (dotted lines in
 Fig. \ref{fig:subduction}). A high resistance at the trench can be also observed in case of a true free surface for the low resolution grid used (continuous
-lines in Fig. \ref{fig:subduction}), as pointed out by \citet{Schmeling2008}.
+lines in Fig. \ref{fig:subduction}), as pointed out by \citet{Schmeling2008}. All data can be 
+found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Surface_processes/Spontaneous_subduction}.
 
 \begin{figure}
 \centering
@@ -671,7 +689,8 @@ necking is complete (Fig. \ref{fig:slab}b).
 The width of necking is tracked by means of markers position at the side of the slab. Necking width and time are normalised in function of the initial slab
 (\SI{80}{\km}) and the characteristic time ($t_c=$ \SI{7.1158e14}{\s}) \citep{Schmalholz2011,Glerum2018}. The results in case of arithmetic, geometric and
 harmonic mean of the viscosity are shown in Fig. \ref{fig:necking}, compared with results from \citet{Glerum2018} for which an infinity norm mean was used.
-The influence of the average schemes agrees with results shown in Section \ref{sec:subduction}.
+The influence of the average schemes agrees with results shown in Section \ref{sec:subduction}. All data can be 
+found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Nonlinear_visco_plasticity/Slab_detachment}.
 
 \begin{figure}
 \noindent\includegraphics[width=\textwidth]{./Figures/Slab.pdf}
@@ -698,7 +717,8 @@ fixed either to 0 (rough punch experiment) or free (smooth punch experiment).
 Fig. \ref{fig:indenter} show the results in terms of viscosity (panels a and b), strain rate (panels c and d), velocity (panels e and f) and pressure
 (panels g and h) for both experiments. The analytical solution indicate that pressure at ($0.5;1$) and ($0.5 \pm w_p;1$)is $p=\pi +1$ and $p=1$, respectively
 (black and red lines in Fig. \ref{fig:smooth_p}). Fig. \ref{fig:smooth_p} shows a clear improvement in the pressure solution when passing from a rough to a
-smooth punch (green and blue lines in Fig. \ref{fig:smooth_p}, respectively), as previously observed by \citet{Thieulot2014} and \citet{Glerum2018}.
+smooth punch (green and blue lines in Fig. \ref{fig:smooth_p}, respectively), as previously observed by \citet{Thieulot2014} and \citet{Glerum2018}. 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Nonlinear_visco_plasticity/Indenter}.
 
 \begin{figure}
 \centering
@@ -733,7 +753,8 @@ Shear band angles in case of $\phi=20$° are shown for compression and extension
 as function of internal friction angles from 0° to 30° are extracted at different depths and minimum and maximum values are plotted in Fig. \ref{fig:brick},
 in comparison with theoretical Roscoe, Arthur and Coulomb shear band angles. For all tests the tolerance for nonlinear convergence is defined $tol=10^{-7}$
 and none converges before the maximum number of iterations ($it_{max}=1000$) is reached. However, tests with internal friction angles up to 15° show a constant
-decrease of the velocity residuals, which can not be observed for for tests with higher internal friction angles (Fig. \ref{fig:convergence}).
+decrease of the velocity residuals, which can not be observed for for tests with higher internal friction angles (Fig. \ref{fig:convergence}). 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Nonlinear_visco_plasticity/Brick_experiment}.
 
 \begin{figure}
 \centering
@@ -768,7 +789,8 @@ $x=0.25$. Temperature is set to 1 for $x \leq 0.25$ and to 0 for $x > 0.25$. Vel
 
 Temperature profiles at the end of the simulation are shown in \ref{fig:advection} as function of the dimensionless coefficient $\gamma=\tau \bm{v}/h$. In case
 of the classic Galerkin method ($\gamma=0$, blue line in \ref{fig:advection}) the final thermal profile is characterised by strong oscillations, which are
-eliminated in case of the SUPG method ($\gamma=0.045$, orange line in \ref{fig:advection}).
+eliminated in case of the SUPG method ($\gamma=0.045$, orange line in \ref{fig:advection}). 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Energy_equation/Advection_stabilisation}.
 
 \begin{figure}
 \centering
@@ -779,7 +801,7 @@ classic Galerkin method ($\gamma=0$); orange line indicates the temperature prof
 \label{fig:advection}
 \end{figure}
 
-\subsection{Shear and adiabatic heating}\label{sec:simple_shear}
+\subsection{Shear heating}\label{sec:simple_shear}
 This exercise is performed in an unit square domain composed by \num{128x128} elements. The velocity field is prescribed on the entire domain with
 $\bm{v}=(L_y-y)y\bm{e_x}$; viscosity, density and specific heat are fixed to 1, while thermal conductivity and radiogenic energy are fixed to 0. Therefore,
 the energy equation (Eq. \ref{eq:energy}) can be simplified as \[\frac{\partial T}{\partial t}=H_s\] and fixing $T(t=0)=0$, the temperature can be find as
@@ -792,7 +814,8 @@ In this case we have
 \end{eqnarray}
 and, simplifying Eq. \ref{eq:shear}, shear heating can be calculated as \[H_s(x,y)=(1-2y)^2\]
 
-The solution predicted by the model in terms of velocity, temperature and shear heating match well with the analytical solutions (Fig. \ref{fig:analytical_en}).
+The solution predicted by the model in terms of velocity, temperature and shear heating match well with the analytical solutions (Fig. \ref{fig:analytical_en}). 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Energy_equation/Simple_shear}.
 
 %\begin{figure}
 %\centering
@@ -817,7 +840,8 @@ domain) has $\rho_1=$ \SI{3200}{\kg\per\cubic\m} and $\eta_1=$ \SI{e20}{\pascal\
 \SI{3300}{\kg\per\cubic\m} and $\eta_2=$ \SI{e22}{\pascal\s}. Velocity boundary conditions are set to free slip on all sides of the domain. 
 
 As shown in Fig. \ref{fig:energy}, both shear and adiabatic heating predicted by the code (first row in Fig. \ref{fig:energy}) well recreate the results
-obtained by means of example ${Shear\_adiabatic\_heating.m}$ from \citet{Gerya2010b} (second row in Fig. \ref{fig:energy}).
+obtained by means of example ${Shear\_adiabatic\_heating.m}$ from \citet{Gerya2010b} (second row in Fig. \ref{fig:energy}). 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Energy_equation/Adiabatic%2BShear}.
 
 \begin{figure}
 \centering
@@ -837,7 +861,8 @@ bottom of the domain. Velocity boundary conditions are set to free slip on all s
 
 The solution generated by the code in terms of $v_{\textrm{rms}}$ (calculated as in Sec. \ref{sec:error}) and Nu as function of time are reported for all the
 simulations in Fig. \ref{fig:mantle}. At the steady state, $v_{\textrm{rms}}$ and Nu of all simulations converge well toward the values from \citet{Blankenbach1989},
-with lower errors for higher resolution grids (Table \ref{tab:mantle}).
+with lower errors for higher resolution grids (Table \ref{tab:mantle}). All data can be found at 
+\url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum%2BEnergy/Mantle_convection}.
 
 \begin{figure}
 \centering
@@ -886,7 +911,8 @@ The linear and the nonlinear-plastic parts of the viscosity are calculated follo
 where $\Delta\eta_T$, $\Delta\eta_y$, $\eta^*$ and $\sigma_Y$ are parameters chosen as listed in Table \ref{tab:tosi_setup}.
 
 For each case, some diagnostic quantities measured at the steady state are reported in Table \ref{tab:visco_mantle} (see Section \ref{sec:error} for 
-the computation of all the quantities), showing a well fit with results described in \citet{Tosi2015}. 
+the computation of all the quantities), showing a well fit with results described in \citet{Tosi2015}. Data and charts for all cases can be found at 
+\url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum%2BEnergy/Viscoplastic_mantle_convection}.
 
 %\renewcommand{\arraystretch}{1.5}
 %{\rowcolors{3}{white!100!}{gray!25!}
@@ -942,7 +968,7 @@ the computation of all the quantities), showing a well fit with results describe
 
 \renewcommand{\arraystretch}{1.5}
 %{\rowcolors{3}{gray!25!}{white!100!}
-\begin{table}[H]
+\begin{table}
   \caption{Results of the viscoplastic mantle convection benchmark for different grid resolutions in Cases 1-5 compared with results obtained with ELEFANT
   and YACC ($100\times100$ elements, from \citealp{Tosi2015}) and in Stone 28 ($32\times32$ elements, from
   \url{https://github.com/cedrict/fieldstone/tree/master/python_codes/fieldstone_28}).}
@@ -1055,7 +1081,8 @@ The experiment is performed with two grid resolution (\num{125x40} and \num{200x
 (see Sec. \ref{sec:error}) calculated for both the simulations match well with results from \citet{vanKeken1997} and obtained with ASPECT
 \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and ELEFANT \citep{Thieulot2014}, obtained with similar grid resolutions
 (Fig. \ref{fig:thin}). In addition, a variety of simulations with different resolutions and aspect ratios are performed to verify that the sensitivity of the
-initial velocity field. Results match well with results from \citet{vanKeken1997} (in the grey area) and \citet{Thieulot2014} (Fig. \ref{fig:thin_initial}).
+initial velocity field. Results match well with results from \citet{vanKeken1997} (in the grey area) and \citet{Thieulot2014} (Fig. \ref{fig:thin_initial}). 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum%2BEnergy/Thin_layer}.
 
 \begin{figure}
 \centering
@@ -1089,7 +1116,8 @@ and in the lithosphere is function of pressure and temperature and is calculated
 
 As shown in \citet{Quinquis2014}, the model is characterised by a progressive dehydration in the external portion of the cylinder, due to the increase of
 temperature, with a consequent vertical migration of free water that hydrates the mantle above the cylinder, up to the lithosphere. The distribution of
-bound and free water during the evolution of the experiment is shown in Fig. \ref{fig:quinquis} (left and right columns, respectively).
+bound and free water during the evolution of the experiment is shown in Fig. \ref{fig:quinquis} (left and right columns, respectively). 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Hydration}.
 
 \begin{figure}
 \centering
@@ -1109,7 +1137,8 @@ Fig. \ref{fig:fraction} shows isobaric melting curves for \SI{1}{\giga\pascal} (
 contents. The curves well match with those obtained for the mantle by \citet{Katz2003}, showing the saturation at the solidus for bulk water of 0.2 and 0.3 wt.\%, indicating
 that the code correctly determines melt fraction as function of pressure, temperature and bulk water content. Same results can be observed in Fig.
 \ref{fig:water}a, where isobaric and isothermal melting curves are shown as function of bulk water content. In addition, Fig. \ref{fig:water}b shows that the
-code correctly determines also the percentage of water in the melt as function of pressure, temperature and melt fraction.
+code correctly determines also the percentage of water in the melt as function of pressure, temperature and melt fraction. 
+All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Melting}.
 
 \begin{figure}
 \noindent\includegraphics[width=\textwidth]{./Figures/Fraction.pdf}
