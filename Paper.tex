@@ -199,9 +199,9 @@ deleted.
 
 \section{Non-linear rheologies}\label{sec:nonlinear}
 Non-linear rheologies are implemented combining viscous creep (dislocation and diffusion) and plastic yielding. For each marker, diffusion and dislocation
-viscosity ($\eta_{df|ds}$) can be determined as follows \citep{Karato1993,Wang2016,Glerum2018}:
+viscosity ($\eta_{df|ds}$) can be determined as follows \citep{Karato1993,Erdos2014,Wang2016}:
 \begin{equation}\label{eq:viscous}
-\eta_{df|ds}=\left(\frac{d^m}{A}\right)^{\frac{1}{n}}I_2^{\frac{(1-n)}{n}}\exp\left(\frac{Q+pV}{nRT}\right)
+\eta_{df|ds}=\left(\frac{d^m}{A}\right)^{\frac{1}{n}}I_2^{\frac{(1-n)}{2n}}\exp\left(\frac{Q+pV}{nRT}\right)
 \end{equation}
 where $d$ is the grain size, $m$ is the grain size exponent, $n$ is the stress exponent, $A$ is the pre-exponential factor, $I_2$ is the square root of the
 second invariant of the strain rate tensor, $Q$ is the activation energy, $p$ is the pressure, $V$ is the activation volume, $R$ is the gas constant and $T$
