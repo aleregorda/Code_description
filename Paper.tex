@@ -42,8 +42,8 @@ in Section \ref{sec:benchmark}.
 \midrule
   Solver  & Stokes flow & \ref{sec:stokes} \\
 \hline
-  4th-order Runge-Kutta  & \multirow{2}{*}{Zalesak disk} & \multirow{2}{*}{\ref{sec:runge}} \\
-  markers advection  &  & \\
+  \multirow{2}{*}{Markers advection} & Zalesak disk & \ref{sec:runge} \\
+    & Conservative Interpolation Velocity & \ref{sec:CVI} \\
 \hline
   \multirow{4}{*}{Momentum equation}  & Poiseuille flow & \ref{sec:poiseuille}\\
     & Instantaneous 2D sphere & \ref{sec:ist_sphere} \\
@@ -118,7 +118,7 @@ Differently, the average scheme for the elemental viscosity can be chosen betwee
 randomly at the beginning of the simulation and their advection is performed by either a 2nd-order or a 4th-order Runge-Kutta in space, interpolating the velocity 
 field on each marker by means of the shape functions (see Section \ref{sec:runge}). The interpolated velocity is then corrected by means of the Conservative
 Velocity Interpolation (CVI), which introduces a corrective term to reduce dispersion and clustering of particles in both steady state and time-dependent 
-\citep{Wang2015}.
+\citep{Wang2015} (see Section \ref{sec:CVI}).
 
 The initial distribution of the markers is created using the open-source code library
 Geodynamic World Builder \citep{Fraters2019}. During the simulation, each marker carries memory of temperature, pressure and accumulated strain, which are
@@ -470,6 +470,8 @@ time steps are shown in blue, red and green for a grid resolution of \num{100x10
 dark green and purple in case of \num{200x200} elements (for CFL of 0.1, 0.25 and 0.5, respectively).}
 \label{fig:runge_err}
 \end{figure}
+
+\subsection{Conservative Velocity Interpolation}\label{sec:CVI}
 
 \subsection{Poiseuille flow}\label{sec:poiseuille}
 The domain is a rectangle with $L_x=2$ and $L_y=1$ and constant density and viscosity ($\rho=1$ and $\eta=1$), gravity acceleration $\bm{g}=\bm{0}$ and penalty
