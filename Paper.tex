@@ -3,6 +3,7 @@
 \usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{textcomp}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -28,12 +29,12 @@
 \begin{document}
 
 \section{Introduction}\label{sec:intro}
-This supplement includes a description of the code, with a presentation of the features implemented followed by results of extensive benchmarks listed in
-Table \ref{tab:list}, implemented to verify that the code solves correctly a large range of problems. Description and results of all benchmarks are shown
+This document includes a description of the code FALCON, with a presentation of the features implemented followed by results of extensive benchmarks listed in
+Table \ref{tab:list}, performed to verify that the code solves correctly a wide range of problems. Description and results of all benchmarks are shown
 in Section \ref{sec:benchmark}.
 
 \begin{table}[H]
-\caption{List of benchmarks implemented for each feature of the code. Data of all benchmarks can be found at 
+\caption{List of benchmarks performed for each feature of the code. Data of all benchmarks can be found at 
 \url{https://github.com/aleregorda/Benchmarks}}
 \centering
 \begin{tabular}{| l | l | l |}
@@ -103,7 +104,7 @@ where $\rho_0$ is the density at a reference temperature $T_0$ and $\alpha$ is t
 \end{equation}
 This simplification is known as the extended Boussinesq approximation.
 
-The time step $dt$ is chosen in according to Courant-Friedrichs-Lewy condition \citep{Anderson}, such that
+The time step $dt$ is chosen in according to Courant-Friedrichs-Lewy condition \citep{Anderson1995}, such that
 \[dt=C_n\; \min\left(\frac{\Delta x}{\max|\bm{u}|},\frac{(\Delta x)^2}{\kappa}\right)\]
 where $0<C_n<1$ is the Courant (CFL) number, $\Delta x$ is the minimum dimension of smallest element, $\max|\bm{u}|$ is the maximum velocity calculated on the
 entire domain and
@@ -157,7 +158,7 @@ The Earth's surface can be treated by means of either the so-called sticky-air o
 sticky-air method the surface is approximated with the introduction of a buoyant layer with a viscosity at least four orders of magnitude lower than the crust
 \citep{Schmeling2008,Crameri2012} and the interface between lithosphere and air is defined using a chain of passive markers that are advected as the Lagrangian
 markers. The correctness of the evolution of the markers chain is tested with the experiment of a 2D time-dependent Stokes sphere below a free surface and
-compared with results from ASPECT\footnote{\url{https://aspect.geodynamics.org/}} \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} (Section
+compared with results from ASPECT\footnote{\url{https://aspect.geodynamics.org/}} \citep{Kronbichler2012,Heister2017,Bangerth2020,Bangerth2020a} (Section
 \ref{sec:sphere}). In the true free surface case the top boundary is assumed stress-free and velocities are not fixed. In this case topography variations are
 described by vertical deformations of the mesh that depend on the velocity field of the nodes that identify the free surface, while horizontal deformations are
 not taken into account. This procedure is known as the Arbitrary Lagrangian-Eulerian (ALE) method and its implementation follows the technique described in
@@ -171,45 +172,64 @@ both the sticky-air and the true free surface method (Section \ref{sec:crameri})
 subduction experiment described by \citet{Schmeling2008}.
 
 \section{Erosion and sedimentation}\label{sec:erosion}
-Surface processes at the lithosphere-air interface are implemented taking into account fluvial erosion (long-range processes), hillslope processes (short-range
-processes) and failure of slopes exceeding a threshold angle $\theta$ \citep{Burov1997,Tucker1999,Sacek2012,Croissant2014,Ueda2015,Beucher2020}. Erosion rates
-$\dot{E}_{lr}$ due to long-range processes can be described by a stream power law equation \citep{Tucker1999,Ueda2015,Beucher2020}, in according to
+Surface processes at either the lithosphere-air interface or in correspondence of the free surface have been implemented by means of the software
+Fastscape\footnote{\url{https://fastscape.org/}} \citep{Braun2013,Cordonnier2019,Yuan2019a,Yuan2019b}. FastScapeLib is a set of routines that solve the stream
+power law (enriched by a sediment transport/deposition term) \citep{Yuan2019a}, hillslope diffusion and marine transport and deposition \citep{Yuan2019b}.
+The partial differential equation solved by FastScapeLib is:
 \begin{equation}
-\dot{E}_{lr}=K_f A^{m_e} \bm{\nabla} h^{n_e}
+\frac{\partial h}{ \partial t}=U-K_f A^{m_e}S^{n_e} + \frac{G}{A}\int_A \left( U-\frac{\partial h}{\partial t} \right) dA + K_d \bm{\nabla}^2 h 
 \end{equation}
-where $K_f$ is the erodibility coefficient, $A$ is the upstream drainage area, $\bm{\nabla} h$ is the slope and $m_e$ and $n_e$ are parameters chosen in to
-constrain the ratio $m_e/n_e$ between 0.35 and 0.8 \citep{Croissant2014,Ueda2015,Beucher2020}. Erosion rates $\dot{E}_{sr}$ due to short-range processes are
-implemented by assuming that transport is linearly proportional to slope \citep{Burov1997,Ueda2015,Beucher2020}, in according to
-\begin{equation}
-\dot{E}_{sr}=K_d \bm{\nabla}^2 h
-\end{equation}
-where $K_d$ is the effective diffusivity. In addition, the slope is modified if it still exceeds a threshold angle after long- and short-range processes
-\citep{Ueda2015}.
+where $h$ is the topography, $U$ is the uplift, $K_f$ is the erodibility coefficient, $A$ is the upstream drainage area, $S$ is the slope, $m_e$ and $n_e$ are
+parameters that should be chosen to constrain the ratio $m_e/n_e$ between 0.35 and 0.8 \citep{Croissant2014,Ueda2015,Beucher2020}, $G$ is the dimensionless
+deposition/transport coefficient for the enriched stream power law and $K_d$ is the effective diffusivity. Terms $K_f A^{m_e}S^{n_e}$ and $K_d \bm{\nabla}^2 h$
+consider long-range processes, described by a stream power law equation \citep{Tucker1999,Ueda2015,Beucher2020}, and short-range processes,
+proportional to slope \citep{Burov1997,Ueda2015,Beucher2020}.
 
-Offshore sedimentation processes are implemented similarly to hillslope processes but with a depth-dependent coefficient \citep{Sacek2012,Beucher2020}.
-The sedimentation rate $\dot{S}$ is calculated as
-\begin{equation}
-\dot{S}=K_s \bm{\nabla}^2 h
-\end{equation}
-with
-\begin{equation}
-K_s=K^*_s \exp\left(\frac{h-h_{sl}}{h_0}\right)
-\end{equation}
-where $K^*_s$ is a constant, $h_{sl}$ is the sea level and $h_0$ is a characteristic length. In case of sticky air, slope is determined by means of the markers
-chain, which is vertically corrected considering erosion and sedimentation rates. After the correction, continental markers above the markers chain are
-transformed in air markers and air markers below the markers chain become sediments. Similarly, slope is determined considering the nodes on the top boundary
-in case of true free surface and they are vertically corrected as for the markers chain. In this case, continental markers above the top boundary are simply
-deleted.
+In case of sticky air, slope is determined by means of the markers chain, which is vertically corrected considering erosion and sedimentation rates. After the
+correction, continental markers above the markers chain are transformed in air markers and air markers below the markers chain become sediments. Similarly,
+slope is determined considering the nodes on the top boundary in case of true free surface and they are vertically corrected as for the markers chain. In this
+case, continental markers above the top boundary are simply deleted.
+%Surface processes at the lithosphere-air interface are implemented taking into account fluvial erosion (long-range processes), hillslope processes (short-range
+%processes) and failure of slopes exceeding a threshold angle $\theta$ \citep{Burov1997,Tucker1999,Sacek2012,Croissant2014,Ueda2015,Beucher2020}. Erosion rates
+%$\dot{E}_{lr}$ due to long-range processes can be described by a stream power law equation \citep{Tucker1999,Ueda2015,Beucher2020}, in according to
+%\begin{equation}
+%\dot{E}_{lr}=K_f A^{m_e} \bm{\nabla} h^{n_e}
+%\end{equation}
+%where $K_f$ is the erodibility coefficient, $A$ is the upstream drainage area, $\bm{\nabla} h$ is the slope and $m_e$ and $n_e$ are parameters chosen in to
+%constrain the ratio $m_e/n_e$ between 0.35 and 0.8 \citep{Croissant2014,Ueda2015,Beucher2020}. Erosion rates $\dot{E}_{sr}$ due to short-range processes are
+%implemented by assuming that transport is linearly proportional to slope \citep{Burov1997,Ueda2015,Beucher2020}, in according to
+%\begin{equation}
+%\dot{E}_{sr}=K_d \bm{\nabla}^2 h
+%\end{equation}
+%where $K_d$ is the effective diffusivity. In addition, the slope is modified if it still exceeds a threshold angle after long- and short-range processes
+%\citep{Ueda2015}.
+
+%Offshore sedimentation processes are implemented similarly to hillslope processes but with a depth-dependent coefficient \citep{Sacek2012,Beucher2020}.
+%The sedimentation rate $\dot{S}$ is calculated as
+%\begin{equation}
+%\dot{S}=K_s \bm{\nabla}^2 h
+%\end{equation}
+%with
+%\begin{equation}
+%K_s=K^*_s \exp\left(\frac{h-h_{sl}}{h_0}\right)
+%\end{equation}
+%where $K^*_s$ is a constant, $h_{sl}$ is the sea level and $h_0$ is a characteristic length. In case of sticky air, slope is determined by means of the markers
+%chain, which is vertically corrected considering erosion and sedimentation rates. After the correction, continental markers above the markers chain are
+%transformed in air markers and air markers below the markers chain become sediments. Similarly, slope is determined considering the nodes on the top boundary
+%in case of true free surface and they are vertically corrected as for the markers chain. In this case, continental markers above the top boundary are simply
+%deleted.
 
 \section{Non-linear rheologies}\label{sec:nonlinear}
 Non-linear rheologies are implemented combining viscous creep (dislocation and diffusion) and plastic yielding. For each marker, diffusion and dislocation
 viscosity ($\eta_{df|ds}$) can be determined as follows \citep{Karato1993,Wang2016}:
 \begin{equation}\label{eq:viscous}
-\eta_{df|ds}=\left(\frac{d^m}{A}\right)^{\frac{1}{n}}I_2^{\frac{(1-n)}{n}}\exp\left(\frac{Q+pV}{nRT}\right)
+\eta_{df|ds}=f_s \left(\frac{d^m}{A}\right)^{\frac{1}{n}} \left (\frac{2^{\frac{1-n}{n}}}{3^{\frac{n+1}{2n}}} \right)
+I_2^{\frac{(1-n)}{n}}\exp\left(\frac{Q+pV}{nRT}\right)
 \end{equation}
-where $d$ is the grain size, $m$ is the grain size exponent, $n$ is the stress exponent, $A$ is the pre-exponential factor, $I_2$ is the square root of the
-second invariant of the strain rate tensor, $Q$ is the activation energy, $p$ is the pressure, $V$ is the activation volume, $R$ is the gas constant and $T$
-is the temperature. Pressures and temperatures are determined by the interpolation of the nodal parameters, while strain rates are calculated by means of the
+where $f_s$ is a scaling factor used to represent lithologies that are stronger or weaker than the base set, $d$ is the grain size, $m$ is the grain size exponent,
+$n$ is the stress exponent, $A$ is the uniaxial pre-exponential factor, $I_2$ is the square root of the second invariant of the strain rate tensor, $Q$ is the
+activation energy, $p$ is the pressure, $V$ is the activation volume, $R$ is the gas constant and $T$ is the temperature.
+Pressures and temperatures are determined by the interpolation of the nodal parameters, while strain rates are calculated by means of the
 derivative of the velocities on the nodes. In case of diffusion creep $n=1$ and $m>0$, in case of dislocation creep $n>1$ and $m=0$. The viscous creep $\eta_{cp}$
 is then calculated as the harmonic average between $\eta_{df}$ and $\eta_{ds}$:
 \begin{equation}\label{eq:visco_creep}
@@ -334,7 +354,7 @@ where $f_v$ is the viscosity reduction factor between dry and wet conditions, $[
 620 ppm (0.062 wt.\%) \citep{Arcay2005}. By default, $f_v$ is set to 100, in according to \citet{Arcay2005} and \citet{Horiuchi2016}.
 
 \section{Mantle melting}\label{sec:melt}
-Melt fraction in the mantle depends on temperature ($T$, in °C), pressure ($p$, in \si{\giga\pascal}) and the water content in the melt ($X_{H_2O}$, in wt.\%).
+Melt fraction in the mantle depends on temperature ($T$, in \textdegree C), pressure ($p$, in \si{\giga\pascal}) and the water content in the melt ($X_{H_2O}$, in wt.\%).
 The determination of the melt fraction $M$ is implemented as explained by \citet{Katz2003}, according to the successive modification by \citet{Langmuir2006} and
 \citet{Kelley2010}, as follows
 \begin{eqnarray}\label{eq:melt_fr}
@@ -547,7 +567,7 @@ We distinguish three different types of velocity boundary conditions:
 All three cases are performed for different grid resolutions, between \num{16x16} and \num{512x512} elements with 50 randomly distributed markers per element,
 and different average schemes for the viscosity (harmonic, geometric and arithmetic). The velocity in the centre of the sphere $\bm{v}(0.5;0.5)$), minimum and
 maximum velocities ($u_{min}$, $u_{max}$, $v_{min}$, $v_{max}$) and pressures ($p_{min}$, $p_{max}$) on the entire domain, $v_{\textrm{rms}}$ and average pressure on the
-entire domain ($p_{avg}$) are compared with solutions generated by ASPECT \citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and all results
+entire domain ($p_{avg}$) are compared with solutions generated by ASPECT \citep{Kronbichler2012,Heister2017,Bangerth2020,Bangerth2020a} and all results
 can be found at \url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere2D} and 
 \url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum_equation/Instantaneous_2D_Sphere}. Results in terms of the $v_{\textrm{rms}}$ for NS model 
 are also shown in Fig. \ref{fig:inst_sphere}.
@@ -623,7 +643,7 @@ $y\leq 0.75$, while for $y>0.75$ the air has $\rho_a=0$ and $\eta_a=10^{-3}$. Ve
 number is set to 0.25. The experiments run for 200 s using grid resolutions from \num{150x150} to \num{512x512} elements, with 25 randomly distributed markers
 per element, and for different average schemes for the viscosity. The interface between the fluid and the air is tracked by means of the markers chain. Results
 in terms of velocity and pressure fields and topography variations are compared with results obtained with ASPECT
-\citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and they can be found at
+\citep{Kronbichler2012,Heister2017,Bangerth2020,Bangerth2020a} and they can be found at
 \url{https://github.com/cedrict/fieldstone/tree/master/images/stokes_sphere_fs2D} and
 \url{https://github.com/aleregorda/Benchmarks/tree/main/Surface_processes/Time_dependent_sphere}. Results in terms of the $v_{\textrm{rms}}$ in case of 
 an arithmetic average are also shown in Fig. \ref{fig:inst_spherefs}.
@@ -941,7 +961,7 @@ and \num{100x100} elements. Reference viscosity, reference density, heat capacit
 value of 1 ($\eta_0= \rho_0= C_p = k=\alpha=1$), while the gravity has been chosen as $g_y=10^2$, in order to obtain a Rayleigh number $Ra=10^2$. Temperatures
 are set to 0 on top and 1 on bottom of the domain. Velocity boundary conditions are set to free slip on all sides. The initial temperature field is given by
 \[T(x,y)=(1-y)+0.01 \cos (\pi x) \sin (\pi y)\].
-The viscosity ﬁeld $\eta$ is calculated as the harmonic average between a linear part $\eta_{lin}$ that depends on temperature only or on temperature and 
+The viscosity field $\eta$ is calculated as the harmonic average between a linear part $\eta_{lin}$ that depends on temperature only or on temperature and 
 depth $y$ and a nonlinear-plastic part $\eta_{pl}$ that depends on the strain rate $\dot{\bm{\epsilon}}$, as follows
 \[\eta(T,y,\dot{\bm{\epsilon}})=2\left(\frac{1}{\eta_{lin}(T,y)}+\frac{1}{\eta_{pl}(\dot{\bm{\epsilon}})}\right)^{-1}\]
 The linear and the nonlinear-plastic parts of the viscosity are calculated following \citet{Tosi2015} as follows
@@ -1118,7 +1138,7 @@ Q&=&2\sqrt{\frac{L_x}{\pi u_0}}\nonumber
 
 The experiment is performed with two grid resolution (\num{125x40} and \num{200x80} elements), with 100 markers per element and CFL of 0.25. $v_{\textrm{rms}}$
 (see Sec. \ref{sec:error}) calculated for both the simulations match well with results from \citet{vanKeken1997} and obtained with ASPECT
-\citep{KHB12,heister_aspect_methods2,aspect-doi-v2.2.0,aspectmanual} and ELEFANT \citep{Thieulot2014}, obtained with similar grid resolutions
+\citep{Kronbichler2012,Heister2017,Bangerth2020,Bangerth2020a} and ELEFANT \citep{Thieulot2014}, obtained with similar grid resolutions
 (Fig. \ref{fig:thin}). In addition, a variety of simulations with different resolutions and aspect ratios are performed to verify that the sensitivity of the
 initial velocity field. Results match well with results from \citet{vanKeken1997} (in the grey area) and \citet{Thieulot2014} (Fig. \ref{fig:thin_initial}). 
 All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum%2BEnergy/Thin_layer}.
