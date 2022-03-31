@@ -386,13 +386,13 @@ Effective density ($\rho_{eff}$) for partially molten rocks is calculated as
 \begin{equation}\label{eq:melt_dens}
 \rho_{eff}=\rho_s(1-M)+\rho_m M
 \end{equation}
-where $\rho_s$ and $\rho_m$ are the densities of the solid and the molten rock, respectively \citep{Gerya2003a,Wang2016}. The density of the solid rock is
-extracted by Perple\_X, while the density of the molten portion is calculated as
+where $\rho_s$ and $\rho_m$ are the densities of the solid and the molten rock, respectively \citep{Gerya2004b,Gerya2007,Wang2016}. The density of the
+solid rock is extracted by Perple\_X, while the density of the molten portion is calculated as
 \begin{equation}\label{eq:melt_dens_M}
 \rho_m(p,T)=\rho_0[1-\alpha(T-T_0)][1+\beta(p-p_0)]
 \end{equation}
 where $\rho_0$ is the density at the reference temperature ($T_0$) and pressure($p_0$), and $\alpha$ and $\beta$ are the thermal expansion and compressibility
-coefficients, respectively \citep{Gerya2003a,Wang2016}.
+coefficients, respectively \citep{Gerya2004b,Gerya2007,Wang2016}.
 
 As for the phase transitions, effects of density variations on buoyancy force in the momentum equation (Eq. \ref{eq:momentum_penalty}) are taken into account
 considering effective coefficient of thermal expansion. Similarly, latent heat due to melting/crystallisation can be implicitly included in the energy equation
@@ -402,7 +402,7 @@ considering effective coefficient of thermal expansion. Similarly, latent heat d
 \label{eq:alpha_effective}\alpha_{eff}&=&\alpha+\rho\frac{H_L}{T}\left(\frac{\partial M}{\partial p}\right)_T
 \end{eqnarray}
 where $C_p$ and $\alpha$ are the specific heat and the coefficient of thermal expansion of the solid rock, respectively, and $H_L$ is the latent heat of the
-molten rock \citep{Gerya2003a,Gerya2007,Tackley2010}.
+molten rock \citep{Gerya2004b,Gerya2007,Tackley2010}.
 
 \section{Benchmarks}\label{sec:benchmark}
 \subsection{Error measurements}\label{sec:error}
