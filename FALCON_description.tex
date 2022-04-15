@@ -150,7 +150,7 @@ The penalty method is been associated to the iterative Uzawa method, as describe
 shown in Sections \ref{sec:ist_sphere} and \ref{sec:rayleigh}.
 
 To support large viscosities variations the penalty parameter is related to the effective elemental viscosity by means of a dimensionless coefficient, so that
-$\lambda=\lambda_e(e)\eta_{eff}(e)$ \citep{Marotta2006,Dabrowski2008,Thieulot2014}. Benchmark of the falling block \citep{Gerya2003a,Gerya2010b,Thieulot2011}
+$\lambda=\lambda_e(e)\eta_{eff}(e)$ \citep{Marotta2006,Dabrowski2008,Thieulot2014}. Benchmark of the falling block \citep{Gerya2003a,Gerya2010,Thieulot2011}
 is performed to verify that the code can correctly deal buoyancy driven flows with strong viscosity contrasts (Section \ref{sec:block}).
 
 \section{Sticky air and free surface}\label{sec:sticky}
@@ -251,19 +251,6 @@ where $C$ is the cohesion and $\phi$ is the internal friction angle. In case of 
 excluded. The correctness of the non-linear solution in case of plastic viscosity with variable internal friction angle is verified performing indenter and
 brick experiments (Sections \ref{sec:indenter} and \ref{sec:brick}, respectively).
 
-Strain softening is taken into account for both viscous creep and plastic viscosity \citep{Huismans2003,Babeyko2005,Huismans2005,Sobolev2005,Warren2008a} by
-means of the accumulated strain $\epsilon$ memorised by each marker. Softening in the viscous creep determines a linear decrease of $\eta_{vc}$ by means of a
-viscous strain softening factor $W_S$ that increases linearly from $W_{S_0}$ to $W_{S_{\infty}}$ for $\epsilon_{S_0}<\epsilon_S<\epsilon_{S_{\infty}}$ 
-\citep{Warren2008a}. This viscous softening can be related to strain-induced grain size reduction \citep{Warren2008a}. Differently, plastic softening is 
-simulated with a linear decrease of internal friction angle $\phi(\epsilon)$ and cohesion $C(\epsilon)$ in according to
-\begin{eqnarray}
-\label{eq:friction1}\phi(\epsilon)&=&\phi_0+(\phi_{\infty}-\phi_0)\frac{\epsilon-\epsilon_0}{\epsilon_{\infty}-\epsilon_0}\\
-\label{eq:friction2}C(\epsilon)&=&C_0+(C_{\infty}-C_0)\frac{\epsilon-\epsilon_0}{\epsilon_{\infty}-\epsilon_0}
-\end{eqnarray}
-where $\phi_0$, $C_0$ and $\phi_{\infty}$, $C_{\infty}$ are internal friction angle and cohesion for $\epsilon_0$ and $\epsilon_{\infty}$, respectively
-\citep{Huismans2003,Huismans2005,Warren2008a,Thieulot2014}. Plastic softening approximates deformation-induced softening of faults and brittle shear zones
-\citep{Warren2008a}.
-
 Plastic yielding and viscous creep are then combined to obtain a viscoplastic viscosity $\eta_{vp}$ as follows, assuming that they are independent processes
 \citep{Karato2008,Glerum2018}:
 \begin{equation}\label{eq:viscoplastic}
@@ -302,6 +289,32 @@ and
 respectively. Iterations are performed until either maximal number of non-linear iterations ($it_{max}$) is reached or all the normalised nonlinear residual, 
 the velocity residual and the pressure residual converge under a defined tolerance $tol$.
 
+\section{Healing and weakening}
+The temporal evolution of the accumulated strain $\epsilon$ has been implemented as in \citet{Fuchs2019,Fuchs2021}, as following
+\begin{equation}\label{eq:healing}
+  \frac{d\epsilon}{dt}=I_2 - \epsilon H_{rate}(T)
+\end{equation}
+where the first term on the right-hand side is a source term given by the second invariant of the strain rate $I_2$ and the second term a
+temperature-dependent healing factor $H_{rate}$, calculated as
+\begin{equation}\label{eq:healing_rate}
+  H_{rate}(T)=B \exp \left[-\frac{\mu}{2}\left(\frac{1}{T+1}-\frac{1}{2}\right)\right]
+\end{equation}
+where $B$ is a constant describing the time scale of healing, while $\mu$ and $T$ are the non-dimensional temperature activation and temperature,
+respectively \citep{Fuchs2019,Fuchs2021}.
+
+Strain softening is taken into account for both viscous creep and plastic viscosity \citep{Huismans2003,Babeyko2005,Huismans2005,Sobolev2005,Warren2008a} by
+means of the accumulated strain $\epsilon$ memorised by each marker. Softening in the viscous creep determines a linear decrease of $\eta_{vc}$ by means of a
+viscous strain softening factor $W_S$ that increases linearly from $W_{S_0}$ to $W_{S_{\infty}}$ for $\epsilon_{S_0}<\epsilon_S<\epsilon_{S_{\infty}}$ 
+\citep{Warren2008a}. This viscous softening can be related to strain-induced grain size reduction \citep{Warren2008a}. Differently, plastic softening is 
+simulated with a linear decrease of internal friction angle $\phi(\epsilon)$ and cohesion $C(\epsilon)$ in according to
+\begin{eqnarray}
+\label{eq:friction1}\phi(\epsilon)&=&\phi_0+(\phi_{\infty}-\phi_0)\frac{\epsilon-\epsilon_0}{\epsilon_{\infty}-\epsilon_0}\\
+\label{eq:friction2}C(\epsilon)&=&C_0+(C_{\infty}-C_0)\frac{\epsilon-\epsilon_0}{\epsilon_{\infty}-\epsilon_0}
+\end{eqnarray}
+where $\phi_0$, $C_0$ and $\phi_{\infty}$, $C_{\infty}$ are internal friction angle and cohesion for $\epsilon_0$ and $\epsilon_{\infty}$, respectively
+\citep{Huismans2003,Huismans2005,Warren2008a,Thieulot2014}. Plastic softening approximates deformation-induced softening of faults and brittle shear zones
+\citep{Warren2008a}.
+
 \section{The energy equation}\label{sec:en_eq}
 The stabilisation of the advection term of the energy equation (Eq. \ref{eq:energy}) needed to avoid possible oscillations in the thermal solution in the case
 when advection dominates over diffusion, is implemented by means of a streamline-upwind Petrov–Galerkin (SUPG) method, for which the advection term is modified
@@ -315,7 +328,7 @@ and
 H_a=T \alpha \frac{Dp}{Dt} \approx -\alpha T \rho g_y v
 \end{equation}
 The correctness of the implementation and the computation of shear and adiabatic heating is verified performing an exercise with an analytical solution
-(Section \ref{sec:simple_shear}) and Exercise 9.4 in \citet{Gerya2010b} (Section \ref{sec:shear}). Furthermore, mantle convection and thin layer entrainment
+(Section \ref{sec:simple_shear}) and Exercise 9.4 in \citet{Gerya2010} (Section \ref{sec:shear}). Furthermore, mantle convection and thin layer entrainment
 benchmarks (Sections \ref{sec:mantle} and \ref{sec:thin}, respectively) are performed to verify that the code solve correctly Eqs. \ref{eq:momentum_penalty}
 and \ref{eq:energy} in case of a temperature field characterised by an initial perturbation and with a temperature-dependent density. At last, the viscoplastic
 mantle convection benchmark is performed to check also the viscoplasticity in case of a initial perturbed temperature field (Section \ref{sec:visco_mantle}).
@@ -606,7 +619,7 @@ $v_{\textrm{rms}}$ as function of time is reported in Fig. \ref{fig:RT}, matchin
 \end{figure}
 
 \subsection{Falling blocks}\label{sec:block}
-This benchmark is described as proposed by \citet{Gerya2003a}, \citet{Gerya2010b} and \citet{Thieulot2011}. The domain is square with $L_x=L_y=$ \SI{500}{\km}
+This benchmark is described as proposed by \citet{Gerya2003a}, \citet{Gerya2010} and \citet{Thieulot2011}. The domain is square with $L_x=L_y=$ \SI{500}{\km}
 and the grid is composed by \num{50x50} elements with 25 markers in each element. The block is initially centred at ($x=$ \SI{250}{\km}; $y=$ \SI{400}{\km})
 and has a size of \num{100x100} km (Fig. \ref{fig:block}a). The fluid surrounding the block has $\eta_f=$ \SI{e21}{\pascal\per\s} and $\rho_f=$
 \SI{3200}{\kg\per\cubic\m}. The benchmark tests with different viscosities of the block, with $\eta_b$ from \SIrange{e15}{e27}{\pascal\per\s}. In each
@@ -616,7 +629,7 @@ are plotted in Fig. \ref{fig:block}b-f, showing that the code correctly preserve
 than the surrounding fluid (Fig. \ref{fig:block}f).
 
 The velocity in the centre of the falling block at $t=0$ is measured for all experiments and, since the velocity should increase with density contrast, the
-quantity $\bm{v}/(\rho_b-\rho_f)$ is plotted as function of the viscosity contrast. All results perfectly match with those from \citet{Gerya2010b} and they
+quantity $\bm{v}/(\rho_b-\rho_f)$ is plotted as function of the viscosity contrast. All results perfectly match with those from \citet{Gerya2010} and they
 line up on a single curve, demonstrating that the code can correctly deal with large viscosity and density contrasts (Fig. \ref{fig:falling}). All data can be 
 found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum_equation/Falling%20blocks}.
 
@@ -892,21 +905,21 @@ solutions predicted by the model (red lines) are compared with the analytical so
 \end{figure}
 
 \subsection{Shear and adiabatic heating}\label{sec:shear}
-This problem is performed as presented in Exercise 9.4 in \citet{Gerya2010b}. Two materials are vertically separated in a rectangular domain with $L_x=$
+This problem is performed as presented in Exercise 9.4 in \citet{Gerya2010}. Two materials are vertically separated in a rectangular domain with $L_x=$
 \SI{1000}{\km}, $L_y=$ \SI{1500}{\km} and a grid resolution of \num{30x20} elements. Constant thermal coefficient expansion ($\alpha=$ \SI{3e-5}{\per\kelvin}),
 temperature ($T=$ \SI{1300}{\kelvin}) and gravity acceleration ($g_y=$ \SI{-10}{\m\square\s}) are assumed in the whole domain. Fluid 1 (on the left side of the
 domain) has $\rho_1=$ \SI{3200}{\kg\per\cubic\m} and $\eta_1=$ \SI{e20}{\pascal\s}; fluid 2 (on the right side of the domain) has $\rho_2=$
 \SI{3300}{\kg\per\cubic\m} and $\eta_2=$ \SI{e22}{\pascal\s}. Velocity boundary conditions are set to free slip on all sides of the domain. 
 
 As shown in Fig. \ref{fig:energy}, both shear and adiabatic heating predicted by the code (first row in Fig. \ref{fig:energy}) well recreate the results
-obtained by means of example ${Shear\_adiabatic\_heating.m}$ from \citet{Gerya2010b} (second row in Fig. \ref{fig:energy}). 
+obtained by means of example ${Shear\_adiabatic\_heating.m}$ from \citet{Gerya2010} (second row in Fig. \ref{fig:energy}). 
 All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Energy_equation/Adiabatic%2BShear}.
 
 \begin{figure}
 \centering
 \noindent\includegraphics[width=400px]{./Figures/Energy.pdf}
 \caption{Comparison between shear (first column), adiabatic (second column) and total (third column) energy predicted by the code (panels a, b and c) and those
-created using example ${Shear\_adiabatic\_heating.m}$ from Exercise 9.4 in \citet{Gerya2010b} (panels d, e and f).}
+created using example ${Shear\_adiabatic\_heating.m}$ from Exercise 9.4 in \citet{Gerya2010} (panels d, e and f).}
 \label{fig:energy}
 \end{figure}
 
