@@ -470,14 +470,14 @@ Fig. \ref{fig:MUMPS}. All data can be found at \url{https://github.com/aleregord
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=\textwidth]{./Figures/errors.pdf}
+\includegraphics[width=\linewidth]{./Figures/errors.pdf}
 \caption{Velocity and pressure error for the Stokes flow experiment between generated and analytical solution as a function of element size (panel a),
 and comparison between smoothed pressure and analytical solution as function of $x$ coordinate for a grid resolution of \num{128x128} elements (panel b).}
 \label{fig:errors}
 \end{figure}
 
 \begin{figure}
-\noindent\includegraphics[width=\textwidth]{./Figures/MUMPS.pdf}
+\includegraphics[width=\linewidth]{./Figures/MUMPS.pdf}
 \caption{Panel a) Analysis, factorisation, solution and total solve times (panel a) and factorisation memory usage (panel b) as a function of the total number
 of degrees of freedom for the Stokes flow experiment.}
 \label{fig:MUMPS}
@@ -500,14 +500,14 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=200px]{./Figures/Zalesak.pdf}
+\includegraphics[width=200px]{./Figures/Zalesak.pdf}
 \caption{Position of the Zalesak disk at $t=0$, 0.25, 0.5 and 0.75 (orange, red, blue and green, respectively) for the case with Courant number of 1.}
 \label{fig:runge}
 \end{figure}
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/zal_marker.pdf}
+\includegraphics[width=400px]{./Figures/zal_marker.pdf}
 \caption{Distance from the centre as function of time for values of Courant number of  of 0.25, 0.3, 0.5, 0.75 and 1 (green, orange, blue, black and red,
 respectively). R indicates the distance from the centre considering a perfect circle trajectory.}
 \label{fig:runge_err}
@@ -524,15 +524,15 @@ with the CVI correction (panels b and c, respectively) in case of a 2nd-order Ru
 \url{https://github.com/aleregorda/Benchmarks/tree/main/Advection/CVI}.
 \begin{figure}
 \centering
-\noindent\includegraphics[width=\textwidth]{./Figures/CVI.pdf}
+\includegraphics[width=\linewidth]{./Figures/CVI.pdf}
 \caption{Maximum and minimum number of markers per element throughout the experiment, with (green and orange lines) or without (purple and blue lines)
 the CVI correction and using either a 2nd-order (blue and orange lines) or a 4th-order (purple and green lines) Runge-Kutta scheme.}
 \label{fig:CVI}
 \end{figure}
 \begin{figure}
 \centering
-\noindent\includegraphics[width=\textwidth]{./Figures/CVI_time.pdf}
-\caption{Number of markers per element and markers distribution through time using 2nd.order Runge-Kutta scheme.
+\includegraphics[width=\linewidth]{./Figures/CVI_time.pdf}
+\caption{Number of markers per element and markers distribution through time using 2nd-order Runge-Kutta scheme.
 Panels a: number of markers per element (panel a1) and distribution of the markers (panel a2) after the first
 iteration; panels b and c: comparison between number of markers per element (panels b1 and c1) and markers distribution (panels b2 and c2) without and with
 the CVI correction at $t=600$; panels d: number of markers per element (panel d1) and markers distribution (panel d2) in case of CVI correction at $t=2000$.}
@@ -555,14 +555,14 @@ c and Fig. \ref{fig:poi_plot}b). Fig. \ref{fig:poiseuille}d shows that one Uzawa
 correlation with the pressure field. All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum_equation/Poiseuille%20Flow}.
 
 \begin{figure}
-\noindent\includegraphics[width=\textwidth]{./Figures/Poiseuille.pdf}
+\includegraphics[width=\linewidth]{./Figures/Poiseuille.pdf}
 \caption{Velocity field (panel a), pressure (panel b) and divergence velocity of a Poiseuille flow in case of the classic penalty method (no iterations) and
 after one Uzawa iteration (panel c and d, respectively).}
 \label{fig:poiseuille}
 \end{figure}
 
 \begin{figure}
-\noindent\includegraphics[width=\textwidth]{./Figures/Analytical.pdf}
+\includegraphics[width=\linewidth]{./Figures/Analytical.pdf}
 \caption{Velocity (panel a) and pressure (panel b) field predicted by the model for a Poiseuille flow with respect with their analytical solutions. The
 velocity field is plotted as function of the vertical coordinate in $L_x/2$ and the pressure is plotted as function of the x coordinate in $L_y/2$.}
 \label{fig:poi_plot}
@@ -587,7 +587,7 @@ are also shown in Fig. \ref{fig:inst_sphere}.
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/vrms_NS.pdf}
+\includegraphics[width=400px]{./Figures/vrms_NS.pdf}
 \caption{$v_{\textrm{rms}}$ as function of element size for the instantaneous 2D sphere experiment in case of no slip boundary conditions and with different average
 schemes for the viscosity. Results are compared with results obtained by other numerical codes.}
 \label{fig:inst_sphere}
@@ -606,14 +606,14 @@ $v_{\textrm{rms}}$ as function of time is reported in Fig. \ref{fig:RT}, matchin
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/RT.pdf}
+\includegraphics[width=400px]{./Figures/RT.pdf}
 \caption{$v_{\textrm{rms}}$ of the Rayleigh-Taylor experiment as function of time for different resolution of the grid.}
 \label{fig:RT}
 \end{figure}
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=300px]{./Figures/Rayleigh.pdf}
+\includegraphics[width=300px]{./Figures/Rayleigh.pdf}
 \caption{Evolution of the Rayleigh-Taylor experiment for a grid of \num{256x256} elements at $t=0, 500, 1000$ and $2000$ (panels a, b, c and d, respectively).}
 \label{fig:rayleigh}
 \end{figure}
@@ -634,7 +634,7 @@ line up on a single curve, demonstrating that the code can correctly deal with l
 found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Momentum_equation/Falling%20blocks}.
 
 \begin{figure}
-\noindent\includegraphics[width=300px]{./Figures/Block.pdf}
+\includegraphics[width=300px]{./Figures/Block.pdf}
 \centering
 \caption{Density evolution of the falling block experiment at $t=$ \SI{0}{\mega\year} (panel a) and $t=$ \SI{20}{\mega\year} for different viscosities of the
 block (panels b-f).}
@@ -643,7 +643,7 @@ block (panels b-f).}
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Falling.pdf}
+\includegraphics[width=400px]{./Figures/Falling.pdf}
 \caption{Initial velocity relative to the density contrast at the centre of the falling block as function of the viscosity contrast between the block and the
 surrounding fluid.}
 \label{fig:falling}
@@ -663,7 +663,7 @@ an arithmetic average are also shown in Fig. \ref{fig:inst_spherefs}.
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/vrms_arithm.pdf}
+\includegraphics[width=400px]{./Figures/vrms_arithm.pdf}
 \caption{$v_{\textrm{rms}}$ for different grid resolutions as function of time for the 2D time-dependent Stokes sphere experiment in case of an arithmetic average.
 Results are compared with results obtained by ASPECT.}
 \label{fig:inst_spherefs}
@@ -684,7 +684,7 @@ found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Surface_process
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Kaus_random.pdf}
+\includegraphics[width=400px]{./Figures/Kaus_random.pdf}
 \caption{Evolution of the y coordinate in $x=L_x$ as function of time for different time steps, with and without the stabilisation algorithm.}
 \label{fig:stab}
 \end{figure}
@@ -710,7 +710,7 @@ found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Surface_process
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Crameri.pdf}
+\includegraphics[width=400px]{./Figures/Crameri.pdf}
 \caption{Maximum topography as function of time for the Crameri benchmark (coloured lines) in comparison with the analytical solution (black line) and results
 obtained with UNDERWORLD (yellow line) and SULEC (blue line).}
 \label{fig:crameri}
@@ -736,7 +736,7 @@ found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Surface_process
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Subduction.pdf}
+\includegraphics[width=400px]{./Figures/Subduction.pdf}
 \caption{Maximum depth of the slab as function of time for all the simulations of the \citet{Schmeling2008} benchmark, in case of harmonic, geometric and
 arithmetic means (red, green and blue lines, respectively) using a sticky air or a true free surface (discontinuous and continuous lines, respectively).
 Red, green and blue rectangular areas indicate the range of times from \citet{Schmeling2008} when the slab tip reaches \SI{500}{\km} in case of sticky air,
@@ -765,14 +765,14 @@ The influence of the average schemes agrees with results shown in Section \ref{s
 found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Nonlinear_visco_plasticity/Slab_detachment}.
 
 \begin{figure}
-\noindent\includegraphics[width=\textwidth]{./Figures/Slab.pdf}
+\includegraphics[width=\linewidth]{./Figures/Slab.pdf}
 \caption{Effective viscosity for the slab detachment benchmark at the beginning of the evolution (panel a) and when necking is complete (panel b).}
 \label{fig:slab}
 \end{figure}
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Necking.pdf}
+\includegraphics[width=400px]{./Figures/Necking.pdf}
 \caption{Normalised width of the necking of the slab detachment benchmark as function of normalised time.}
 \label{fig:necking}
 \end{figure}
@@ -794,7 +794,7 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Indenter.pdf}
+\includegraphics[width=400px]{./Figures/Indenter.pdf}
 \caption{Viscosity (panels a and b), strain rate (panels c and d), velocity (panels e and f) and pressure (panels g and h) fields for rough (left column) and
 smooth (right column) punch experiments.}
 \label{fig:indenter}
@@ -802,7 +802,7 @@ smooth (right column) punch experiments.}
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Smooth_Rough.pdf}
+\includegraphics[width=400px]{./Figures/Smooth_Rough.pdf}
 \caption{Nodal pressure in function of the x coordinate at $y=1$ for rough (green line) and smooth (blue line) punch experiment. Black and red lines indicate
 the analytical solution at $x=0.5$ and $x=0.5 \pm w_p$, respectively.}
 \label{fig:smooth_p}
@@ -830,7 +830,7 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Brick_Beam.pdf}
+\includegraphics[width=400px]{./Figures/Brick_Beam.pdf}
 \caption{Shear band angles predicted for the brick experiment for $\phi=0$° (panel a) and for $\phi=20$° in case of compression and extension (panels b and c,
 respectively).}
 \label{fig:brick_beam}
@@ -838,7 +838,7 @@ respectively).}
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Brick.pdf}
+\includegraphics[width=400px]{./Figures/Brick.pdf}
 \caption{Shear band angles predicted for the brick experiment in case of compressional and extensional contexts as function of different internal angle of
 friction (continuous black line and red dots), compared with theoretical Roscoe, Artur and Coulomb angles (discontinuous black lines). Red lines indicate the
 range of angles calculated at different depths.}
@@ -847,7 +847,7 @@ range of angles calculated at different depths.}
 
 \begin{figure}
   \centering
-  \noindent\includegraphics[width=500px]{./Figures/convergence.pdf}
+  \includegraphics[width=500px]{./Figures/convergence.pdf}
   \caption{Convergence rates for all tests. Normalised residuals (left column) are compared with velocity residuals (right column) for extensional (first row)
   and compressional (second row) settings.}
   \label{fig:convergence}
@@ -866,7 +866,7 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Advection.pdf}
+\includegraphics[width=400px]{./Figures/Advection.pdf}
 \caption{Temperature profile as function of \textit{x} for the advection stabilisation benchmark. Purple line indicates the initial temperature profile; the
 green line indicates the analytical temperature profile after 250 time steps; blue line indicates the temperature profile after 250 time steps in case of the
 classic Galerkin method ($\gamma=0$); orange line indicates the temperature profile after 250 time steps in case of the SUPG method ($\gamma=0.045$).}
@@ -891,14 +891,14 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 %\begin{figure}
 %\centering
-%\noindent\includegraphics[width=400px]{./Figures/Energy_Thieulot.pdf}
+%\includegraphics[width=400px]{./Figures/Energy_Thieulot.pdf}
 %\caption{Temperature and shear heating predicted by the model after 1 time step.}
 %\label{fig:en_thieulot}
 %\end{figure}
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=500px]{./Figures/Analytical_Shear.pdf}
+\includegraphics[width=500px]{./Figures/Analytical_Shear.pdf}
 \caption{Velocity (panel a), temperature (panel b) and shear heating (panel c) as function of the \textit{y} coordinate for the simple shear experiment. The
 solutions predicted by the model (red lines) are compared with the analytical solutions (dashed blue lines).}
 \label{fig:analytical_en}
@@ -917,7 +917,7 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Energy.pdf}
+\includegraphics[width=400px]{./Figures/Energy.pdf}
 \caption{Comparison between shear (first column), adiabatic (second column) and total (third column) energy predicted by the code (panels a, b and c) and those
 created using example ${Shear\_adiabatic\_heating.m}$ from Exercise 9.4 in \citet{Gerya2010} (panels d, e and f).}
 \label{fig:energy}
@@ -938,7 +938,7 @@ with lower errors for higher resolution grids (Table \ref{tab:mantle}). All data
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Convection.pdf}
+\includegraphics[width=400px]{./Figures/Convection.pdf}
 \caption{$v_{\textrm{rms}}$ (panels a, c and e) and Nu (panels b, d and f) for the mantle convection benchmark as function of time for different grid resolution.
 Panels a and b show the results for $Ra=10^4$; Panels c and d show the results for $Ra=10^5$; panels e and f show the results for $Ra=10^6$. Purple lines
 indicate the convergence values for the $v_{\textrm{rms}}$ and the Nu from \citet{Blankenbach1989} at the steady state.}
@@ -949,8 +949,8 @@ indicate the convergence values for the $v_{\textrm{rms}}$ and the Nu from \cite
 \caption{Comparison between $v_{\textrm{rms}}$ and Nu predicted by the code for the mantle convection experiment and same values as reported in literature.}
 \centering
 \small
-\begin{tabular}{|>{\centering}m{0.09\textwidth}|>{\centering}m{0.05\textwidth}|>{\centering}m{0.24\textwidth}|>{\centering}m{0.15\textwidth}|
-  >{\centering}m{0.1\textwidth} >{\centering}m{0.1\textwidth} >{\centering\arraybackslash}m{0.1\textwidth}|}
+\begin{tabular}{|>{\centering}m{0.09\linewidth}|>{\centering}m{0.05\linewidth}|>{\centering}m{0.24\linewidth}|>{\centering}m{0.15\linewidth}|
+  >{\centering}m{0.1\linewidth} >{\centering}m{0.1\linewidth} >{\centering\arraybackslash}m{0.1\linewidth}|}
 \toprule
 & & \multirow{2}{*}{\citet{Blankenbach1989}} & \citet{Thieulot2014} & \multicolumn{3}{c|}{FALCON}  \\
  & & & \num{200x200} & \num{32x32} & \num{64x64} & \num{128x128}  \\
@@ -991,7 +991,7 @@ the computation of all the quantities), showing a well fit with results describe
 %\begin{table}[H]
 %  \caption{Results of the viscoplastic mantle convection benchmark for Cases 1-4 compared with results obtained with ELEFANT and YACC (from \citealp{Tosi2015}).}
 %  \centering
-%  \resizebox{\textwidth}{!}{
+%  \resizebox{\linewidth}{!}{
 %\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
 %  \toprule
 %    & \multicolumn{3}{c|}{\textbf{Case 1}} & \multicolumn{3}{c|}{\textbf{Case 2}} & \multicolumn{3}{c|}{\textbf{Case 3}} &
@@ -1020,8 +1020,8 @@ the computation of all the quantities), showing a well fit with results describe
   \caption{Benchmark cases and corresponding parameters.}
   \centering
   \small
-\begin{tabular}{|>{\centering}m{0.08\textwidth}|>{\centering}m{0.05\textwidth}>{\centering}m{0.05\textwidth}>{\centering}m{0.05\textwidth}
-  >{\centering}m{0.05\textwidth} >{\centering}m{0.05\textwidth} |>{\centering\arraybackslash}m{0.2\textwidth}|}
+\begin{tabular}{|>{\centering}m{0.08\linewidth}|>{\centering}m{0.05\linewidth}>{\centering}m{0.05\linewidth}>{\centering}m{0.05\linewidth}
+  >{\centering}m{0.05\linewidth} >{\centering}m{0.05\linewidth} |>{\centering\arraybackslash}m{0.2\linewidth}|}
   \toprule
     Case & $Ra$ & $\Delta\eta_T$ & $\Delta\eta_y$ & $\eta^*$ & $\sigma_Y$ & Convective regime \\
   \midrule
@@ -1045,7 +1045,7 @@ the computation of all the quantities), showing a well fit with results describe
   and YACC ($100\times100$ elements, from \citealp{Tosi2015}) and in Stone 28 ($32\times32$ elements, from
   \url{https://github.com/cedrict/fieldstone/tree/master/python_codes/fieldstone_28}).}
   \centering
-  \resizebox{\textwidth}{!}{
+  \resizebox{\linewidth}{!}{
 \begin{tabular}{|cc|ccccccccccc|}
   \toprule
   \multicolumn{13}{|c|}{\textbf{Case 1}} \\
@@ -1158,7 +1158,7 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/vrms_thin.pdf}
+\includegraphics[width=400px]{./Figures/vrms_thin.pdf}
 \caption{$v_{\textrm{rms}}$ for the thin layer experiment as function of time for different grid resolution. Results are compared with results obtained by
 \citet{vanKeken1997} (black lines) and with ASPECT and ELEFANT.}
 \label{fig:thin}
@@ -1166,7 +1166,7 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/vrmszero.pdf}
+\includegraphics[width=400px]{./Figures/vrmszero.pdf}
 \caption{$v_{\textrm{rms}}$ at $t=0$ for the thin layer experiment as function of the element size for different aspect ratios of the elements. Results are compared
 with results obtained by \citet{vanKeken1997} (black dots in the grey area) and with ASPECT and ELEFANT.}
 \label{fig:thin_initial}
@@ -1193,7 +1193,7 @@ All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main
 
 \begin{figure}
 \centering
-\noindent\includegraphics[width=400px]{./Figures/Hydration.pdf}
+\includegraphics[width=400px]{./Figures/Hydration.pdf}
 \caption{Distribution of bound and free water (left and right columns, respectively) at $t=0.5$ and $t=$ \SI{1.25}{\mega\year} (first and second rows,
 respectively) for the sinking hydrated cylinder experiment. Only markers with bound or free water not equal to 0 are plotted.}
 \label{fig:quinquis}
@@ -1213,13 +1213,13 @@ code correctly determines also the percentage of water in the melt as function o
 All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Melting}.
 
 \begin{figure}
-\noindent\includegraphics[width=\textwidth]{./Figures/Fraction.pdf}
+\includegraphics[width=\linewidth]{./Figures/Fraction.pdf}
 \caption{Isobaric melting curves for 1 GPa (panel a) and 3 GPa (panel b) as function of temperature with different bulk water contents.}
 \label{fig:fraction}
 \end{figure}
 
 \begin{figure}
-\noindent\includegraphics[width=\textwidth]{./Figures/Water.pdf}
+\includegraphics[width=\linewidth]{./Figures/Water.pdf}
 \caption{Isobaric melting curves for 1.5 GPa as function of bulk water (panel a) and water in the melt (panel b) calculated for different temperatures.}
 \label{fig:water}
 \end{figure}
