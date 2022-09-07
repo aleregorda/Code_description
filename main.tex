@@ -1,0 +1,47 @@
+\documentclass[hidelinks,10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[cm]{fullpage}
+\usepackage[round]{natbib}
+\bibliographystyle{abbrvnat}
+\usepackage{doi}
+\usepackage{bm}
+\usepackage[table]{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue},
+    citecolor={blue},
+    urlcolor={blue}
+}
+\usepackage{float}
+\restylefloat{table}
+\usepackage{siunitx}
+\DeclareSIUnit\year{yr}
+
+\begin{document}
+
+\input{tex/intro}
+\input{tex/markers}
+\input{tex/mom_eq}
+\input{tex/sticky}
+\input{tex/erosion}
+\input{tex/nonlinear}
+\input{tex/healing}
+\input{tex/en_eq}
+\input{tex/phase}
+\input{tex/melt}
+\input{tex/benchmark}
+
+\clearpage
+
+\bibliography{export}
+
+\end{document}
