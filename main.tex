@@ -1,20 +1,17 @@
-\documentclass[hidelinks,10pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{amsmath}
+\documentclass[a4paper,10pt,fleqn]{falcon}
 \usepackage{amsfonts}
 \usepackage{textcomp}
-\usepackage{amssymb}
-\usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{multirow}
-\usepackage[cm]{fullpage}
+\usepackage{bm}
+\usepackage[table]{xcolor}
+\usepackage{authblk}
+\usepackage{falcon}
 \usepackage[round]{natbib}
 \bibliographystyle{abbrvnat}
 \usepackage{doi}
-\usepackage{bm}
-\usepackage[table]{xcolor}
+\usepackage{wrapfig}
 \hypersetup{
     colorlinks,
     linkcolor={blue},
@@ -25,10 +22,39 @@
 \restylefloat{table}
 \usepackage{siunitx}
 \DeclareSIUnit\year{yr}
+\DeclareSIUnit\anni{a}
+
+\usepackage{tikz}
+\definecolor{lime}{HTML}{A6CE39}
+\DeclareRobustCommand{\orcidicon}{
+	\begin{tikzpicture}
+	\draw[lime, fill=lime] (0,0) 
+	circle [radius=0.16] 
+	node[white] {{\fontfamily{qag}\selectfont \tiny ID}};
+	\draw[white, fill=white] (-0.0625,0.095) 
+	circle [radius=0.007];
+	\end{tikzpicture}
+	\hspace{-2mm}
+}
+\foreach \x in {A, ..., Z}{\expandafter\xdef\csname orcid\x\endcsname{\noexpand\href{https://orcid.org/\csname orcidauthor\x\endcsname}
+			{\noexpand\orcidicon}}
+}
+\newcommand{\orcidauthorA}{0000-0002-7677-4542}
+
+\def\correspondingauthor{\footnote{alessandro.regorda@protonmail.ch}}
+
+\linespread{1.2}
 
 \begin{document}
 
+\title{FALCON: a 2D numerical model}
+
+\author[1]{\orcidA{}Alessandro Regorda\correspondingauthor{}}
+\affil[1]{Università degli Studi di Milano, Milan, Italy}
+
+\maketitle
 \input{tex/intro}
+\input{tex/equations}
 \input{tex/markers}
 \input{tex/mom_eq}
 \input{tex/sticky}
@@ -42,6 +68,6 @@
 
 \clearpage
 
-\bibliography{export}
+\bibliography{Biblio}
 
 \end{document}

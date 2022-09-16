@@ -3,9 +3,9 @@ Surface processes at either the lithosphere-air interface or in correspondence o
 Fastscape\footnote{\url{https://fastscape.org/}} \citep{Braun2013,Cordonnier2019,Yuan2019a,Yuan2019b}. FastScapeLib is a set of routines that solve the stream
 power law (enriched by a sediment transport/deposition term) \citep{Yuan2019a}, hillslope diffusion and marine transport and deposition \citep{Yuan2019b}.
 The partial differential equation solved by FastScapeLib is:
-\begin{equation}
+\begin{eqnarray}
 \frac{\partial h}{ \partial t}=U-K_f A^{m_e}S^{n_e} + \frac{G}{A}\int_A \left( U-\frac{\partial h}{\partial t} \right) dA + K_d \bm{\nabla}^2 h 
-\end{equation}
+\end{eqnarray}
 where $h$ is the topography, $U$ is the uplift, $K_f$ is the erodibility coefficient, $A$ is the upstream drainage area, $S$ is the slope, $m_e$ and $n_e$ are
 parameters that should be chosen to constrain the ratio $m_e/n_e$ between 0.35 and 0.8 \citep{Croissant2014,Ueda2015,Beucher2020}, $G$ is the dimensionless
 deposition/transport coefficient for the enriched stream power law and $K_d$ is the effective diffusivity. Terms $K_f A^{m_e}S^{n_e}$ and $K_d \bm{\nabla}^2 h$

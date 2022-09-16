@@ -1,13 +1,13 @@
 \section{Healing and weakening}\label{sec:healing}
 The temporal evolution of the accumulated strain $\epsilon$ has been implemented as in \citet{Fuchs2019,Fuchs2021}, as following
-\begin{equation}\label{eq:healing}
+\begin{eqnarray}\label{eq:healing}
   \frac{d\epsilon}{dt}=I_2 - \epsilon H_{rate}(T)
-\end{equation}
+\end{eqnarray}
 where the first term on the right-hand side is a source term given by the second invariant of the strain rate $I_2$ and the second term a
 temperature-dependent healing factor $H_{rate}$, calculated as
-\begin{equation}\label{eq:healing_rate}
+\begin{eqnarray}\label{eq:healing_rate}
   H_{rate}(T)=B \exp \left[-\frac{\mu}{2}\left(\frac{1}{T+1}-\frac{1}{2}\right)\right]
-\end{equation}
+\end{eqnarray}
 where $B$ is a constant describing the time scale of healing, while $\mu$ and $T$ are the non-dimensional temperature activation and temperature,
 respectively \citep{Fuchs2019,Fuchs2021}.
 

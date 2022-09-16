@@ -1,7 +1,10 @@
 \section{Lagrangian markers}\label{sec:markers}
 Elemental properties (density, viscosity, thermal conductivity, specific heat and thermal expansion) needed to solve Eqs. \ref{eq:mass_0}, \ref{eq:momentum}
 and \ref{eq:energy} are related to the composition of each element, determined by means of Lagrangian markers that are characteristic of different materials
-in the domain. Elemental properties (with the sole exception of the viscosity) are calculated using an arithmetic mean, as \[P_e=\frac{1}{n}\sum_{i=1}^n P_i\]
+in the domain. Elemental properties (with the sole exception of the viscosity) are calculated using an arithmetic mean, as
+\begin{eqnarray}
+P_e=\frac{1}{n}\sum_{i=1}^n P_i
+\end{eqnarray}
 where $P_e$ is the elemental property, $P_i$ is the property characteristic of the material of each marker and $n$ is the number of markers of the element.
 Differently, the average scheme for the elemental viscosity can be chosen between harmonic, geometric and arithmetic mean. Markers can be placed regularly or
 randomly at the beginning of the simulation and their advection is performed by either a 2nd-order or a 4th-order Runge-Kutta in space, interpolating the velocity 
