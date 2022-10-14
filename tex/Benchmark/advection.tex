@@ -4,14 +4,14 @@ advection term of the energy equation. The domain is a 1D segment with $L_x=1$ c
 $x=0.25$. Temperature is set to 1 for $x \leq 0.25$ and to 0 for $x > 0.25$. Velocity is set to ${u}=1$ in the entire domain. The simulation is performed for
 250 time steps, with $dt=0.002$, so the thermal discontinuity should be at $x=0.75$ at the end of the simulation.
 
-Temperature profiles at the end of the simulation are shown in \ref{fig:advection} as function of the dimensionless coefficient $\gamma=\tau \bm{v}/h$. In case
-of the classic Galerkin method ($\gamma=0$, blue line in \ref{fig:advection}) the final thermal profile is characterised by strong oscillations, which are
-eliminated in case of the SUPG method ($\gamma=0.045$, orange line in \ref{fig:advection}). 
+Temperature profiles at the end of the simulation are shown in Fig. \ref{fig:advection} as function of the dimensionless coefficient $\gamma=\tau \bm{v}/h$. In case
+of the classic Galerkin method ($\gamma=0$, blue line in Fig. \ref{fig:advection}) the final thermal profile is characterised by strong oscillations, which are
+eliminated in case of the SUPG method ($\gamma=0.045$, orange line in Fig. \ref{fig:advection}).
 All data can be found at \url{https://github.com/aleregorda/Benchmarks/tree/main/Energy_equation/Advection_stabilisation}.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=10cm]{./Figures/Advection.pdf}
+\includegraphics[width=9.5cm]{./Figures/Advection.pdf}
 \caption{Temperature profile as function of \textit{x} for the advection stabilisation benchmark. Purple line indicates the initial temperature profile; the
 green line indicates the analytical temperature profile after 250 time steps; blue line indicates the temperature profile after 250 time steps in case of the
 classic Galerkin method ($\gamma=0$); orange line indicates the temperature profile after 250 time steps in case of the SUPG method ($\gamma=0.045$).}
